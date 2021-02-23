@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>513</width>
-    <height>254</height>
+    <width>353</width>
+    <height>185</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -32,8 +32,11 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="0">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
      <widget class="QFrame" name="frame">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -78,7 +81,7 @@
           <bool>false</bool>
          </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Speechless&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;Speechless&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -88,7 +91,7 @@
       </layout>
      </widget>
     </item>
-    <item row="1" column="0">
+    <item>
      <widget class="QFrame" name="frame_2">
       <property name="sizePolicy">
        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -100,67 +103,57 @@
        <enum>Qt::RightToLeft</enum>
       </property>
       <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
+       <enum>QFrame::Box</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <property name="leftMargin">
-        <number>15</number>
-       </property>
-       <property name="topMargin">
-        <number>15</number>
-       </property>
-       <property name="rightMargin">
-        <number>15</number>
-       </property>
-       <property name="bottomMargin">
-        <number>15</number>
-       </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
        <property name="spacing">
         <number>15</number>
        </property>
-       <item row="0" column="1" alignment="Qt::AlignHCenter">
-        <widget class="QRadioButton" name="pushToTalkRadioButton">
+       <property name="leftMargin">
+        <number>5</number>
+       </property>
+       <property name="topMargin">
+        <number>5</number>
+       </property>
+       <property name="rightMargin">
+        <number>5</number>
+       </property>
+       <property name="bottomMargin">
+        <number>5</number>
+       </property>
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QLabel" name="label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="font">
           <font>
            <family>Unispace</family>
-           <pointsize>14</pointsize>
+           <pointsize>10</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
          </property>
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
          </property>
          <property name="text">
-          <string>Push-to-talk mode</string>
+          <string>Global push-to-talk functionality for the default input device.</string>
          </property>
-        </widget>
-       </item>
-       <item row="0" column="3" alignment="Qt::AlignHCenter">
-        <widget class="QRadioButton" name="globalMuteRadioButton">
-         <property name="font">
-          <font>
-           <family>Unispace</family>
-           <pointsize>14</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-         </property>
-         <property name="text">
-          <string>Global Mic Mute</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="Line" name="line">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -174,7 +167,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>513</width>
+     <width>353</width>
      <height>26</height>
     </rect>
    </property>
@@ -199,15 +192,15 @@
     </property>
     <addaction name="actionKeybinding"/>
     <addaction name="actionAutorun"/>
-    <addaction name="actionStart_muted"/>
+    <addaction name="actionStart_hidden"/>
     <addaction name="actionMinimize_to_tray"/>
    </widget>
-   <widget class="QMenu" name="menuDevices">
+   <widget class="QMenu" name="menuDevice">
     <property name="enabled">
      <bool>true</bool>
     </property>
     <property name="title">
-     <string>Devices</string>
+     <string>Device</string>
     </property>
    </widget>
    <widget class="QMenu" name="menuNotifications">
@@ -225,7 +218,7 @@
     <addaction name="actionInfo"/>
    </widget>
    <addaction name="menuOptions"/>
-   <addaction name="menuDevices"/>
+   <addaction name="menuDevice"/>
    <addaction name="menuNotifications"/>
    <addaction name="menuAbout"/>
   </widget>
@@ -249,6 +242,9 @@
   <action name="actionShow_Notifications">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Show Notifications</string>
@@ -281,8 +277,19 @@
    </property>
   </action>
   <action name="actionMinimize_to_tray">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Minimize to tray</string>
+   </property>
+  </action>
+  <action name="actionStart_hidden">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Start hidden</string>
    </property>
   </action>
  </widget>
