@@ -190,7 +190,22 @@
     <property name="title">
      <string>Options</string>
     </property>
-    <addaction name="actionKeybinding"/>
+    <widget class="QMenu" name="menuKeybinding">
+     <property name="title">
+      <string>Keybinding</string>
+     </property>
+     <addaction name="actionTogglekeybinding"/>
+     <addaction name="actionPTTkeybinding"/>
+    </widget>
+    <widget class="QMenu" name="menuOperation_Mode">
+     <property name="title">
+      <string>Operation Mode</string>
+     </property>
+     <addaction name="actionPTTMode"/>
+     <addaction name="actionToggleMode"/>
+    </widget>
+    <addaction name="menuOperation_Mode"/>
+    <addaction name="menuKeybinding"/>
     <addaction name="actionAutorun"/>
     <addaction name="actionStart_hidden"/>
     <addaction name="actionMinimize_to_tray"/>
@@ -207,8 +222,14 @@
     <property name="title">
      <string>Notifications</string>
     </property>
-    <addaction name="actionShow_Notifications"/>
-    <addaction name="actionPlay_Sounds"/>
+    <widget class="QMenu" name="menuPlay_Sounds">
+     <property name="title">
+      <string>Play Sounds</string>
+     </property>
+     <addaction name="actionEnableMuteSound"/>
+     <addaction name="actionEnableUnmuteSound"/>
+    </widget>
+    <addaction name="menuPlay_Sounds"/>
     <addaction name="actionCustom_Sounds"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
@@ -231,14 +252,6 @@
     <string>Autorun at startup</string>
    </property>
   </action>
-  <action name="actionKeybinding">
-   <property name="checkable">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Keybinding</string>
-   </property>
-  </action>
   <action name="actionShow_Notifications">
    <property name="checkable">
     <bool>true</bool>
@@ -248,14 +261,6 @@
    </property>
    <property name="text">
     <string>Show Notifications</string>
-   </property>
-  </action>
-  <action name="actionPlay_Sounds">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Play Sounds</string>
    </property>
   </action>
   <action name="actionCustom_Sounds">
@@ -290,6 +295,48 @@
    </property>
    <property name="text">
     <string>Start hidden</string>
+   </property>
+  </action>
+  <action name="actionPTTMode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Push-to-Talk Mode</string>
+   </property>
+  </action>
+  <action name="actionToggleMode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Toggle Mode</string>
+   </property>
+  </action>
+  <action name="actionTogglekeybinding">
+   <property name="text">
+    <string>Set Toggle Key</string>
+   </property>
+  </action>
+  <action name="actionPTTkeybinding">
+   <property name="text">
+    <string>Set PTT Key</string>
+   </property>
+  </action>
+  <action name="actionEnableMuteSound">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Enable mute sound</string>
+   </property>
+  </action>
+  <action name="actionEnableUnmuteSound">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Enable un-mute sound</string>
    </property>
   </action>
  </widget>

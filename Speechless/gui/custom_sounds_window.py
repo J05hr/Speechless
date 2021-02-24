@@ -20,18 +20,31 @@ class CustomSoundsWindow(BaseClass, FormClass):
         self.mute_sound_filename = None
         self.unmute_sound_filename = None
 
+        self.volume_level = int(self.parent_app.settings.setting["sound_volume"]) * 100
+        self.volume_label = self.findChild(QtWidgets.QLabel, 'volumeLabel')
+        self.volume_label.setText(str(self.volume_level))
+        self.volume_slider = self.findChild(QtWidgets.QSlider, 'volumeSlider')
+        self.volume_slider.setValue(self.volume_level)
+        self.volume_slider.valueChanged.connect(self.slider_cb)
+
         self.mute_browse_button = self.findChild(QtWidgets.QPushButton, 'muteBrowseButton')
         self.mute_browse_button.clicked.connect(self.mute_browse_button_cb)
 
         self.unmute_browse_button = self.findChild(QtWidgets.QPushButton, 'unmuteBrowseButton')
         self.unmute_browse_button.clicked.connect(self.unmute_browse_button_cb)
 
+    def slider_cb(self):
+        self.volume_label.setText(str(self.volume_slider.value()))
+        self.volume_level = self.volume_slider.value()
+        self.parent_app.settings.setting["sound_volume"] = self.volume_slider / 100
+        settings_util.write_settings(self.parent_app.settings)
+
     def mute_browse_button_cb(self):
         self.mute_browse_dialog = QtWidgets.QFileDialog()
         path = sounds_dir
         self.mute_sound_filename = QtWidgets.QFileDialog.getOpenFileName(self.mute_browse_dialog, "", path)
         self.parent_app.settings.setting["sound_files"][0]["mute_sound"] = self.mute_sound_filename[0]
-        settings_util.write_settings(self.current_settings)
+        settings_util.write_settings(self.parent_app.settings)
 
     def unmute_browse_button_cb(self):
         self.unmute_browse_dialog = QtWidgets.QFileDialog()

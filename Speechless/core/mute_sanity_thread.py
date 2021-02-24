@@ -10,9 +10,16 @@ class MST (threading.Thread):
         self.parent_app = app
 
     def mute_sanity_check_fix(self):
-        # as long as the button is not pushed ensure the mic is muted in_case of external changes
-        if not self.parent_app.ptt_key_pushed:
-            mic_controls.mute(self.parent_app, self.parent_app.settings.setting["play_sounds"])
+        mode = self.parent_app.settings.setting['mode']
+        if mode == 'ptt':
+            # as long as the button is not pushed ensure the mic is muted in_case of external changes
+            if not self.parent_app.ptt_key_pushed:
+                mic_controls.basic_mute()
+        else:
+            if self.parent_app.toggle_state == 'muted':
+                mic_controls.basic_mute()
+            else:
+                mic_controls.basic_unmute()
 
     def run(self):
         # 5 sec sleep loop to run the sanity check

@@ -7,9 +7,9 @@ sounds_dir = rel_dir + '\\sounds'
 config_dir = rel_dir + '\\config'
 config_filename = config_dir + '\\config.json'
 
-# defaults: (t key, autorun, don't start hidden, minimize to tray, don't show notifications,
+# defaults: (ptt mode, y key, t key, autorun, don't start hidden, minimize to tray, don't show notifications,
 #            play sounds, default sounds, 50% volume)
-default_settings = settings.Settings(84, True, False, True, False, True,
+default_settings = settings.Settings('ptt', 'y', 't', True, False, True, False, True,
                                      [{"mute_sound": sounds_dir+'\\beep300.wav'},
                                          {"unmute_sound": sounds_dir+'\\beep750.wav'}], 0.5)
 
@@ -20,7 +20,9 @@ def read_settings():
         with open(config_filename, "r") as config_file:
             current_settings = json.load(config_file)
 
-        keybinding = current_settings["keybinding"]
+        mode = current_settings["mode"]
+        toggle_keybinding = current_settings["toggle_keybinding"]
+        ptt_keybinding = current_settings["ptt_keybinding"]
         autorun = current_settings["autorun"]
         start_hidden = current_settings["start_hidden"]
         minimize_to_tray = current_settings["minimize_to_tray"]
@@ -34,9 +36,10 @@ def read_settings():
         if current_settings["sound_files"][1]["unmute_sound"] is None:
             current_settings["sound_files"][1]["unmute_sound"] = sounds_dir + '\\beep750.wav'
             write_settings(current_settings)
+        sound_volume = current_settings["sound_volume"]
 
-        return settings.Settings(keybinding, autorun, start_hidden, minimize_to_tray, show_notifications,
-                                 play_sounds, sound_files)
+        return settings.Settings(mode, toggle_keybinding, ptt_keybinding, autorun, start_hidden, minimize_to_tray,
+                                 show_notifications, play_sounds, sound_files, sound_volume)
 
     except Exception as e:
         # print error
@@ -52,13 +55,16 @@ def write_settings(new_settings):
     try:
         with open(config_filename, "w") as config_file:
             json_settings = {
-              "keybinding": new_settings.setting["keybinding"],
-              "autorun": new_settings.setting["autorun"],
-              "start_hidden": new_settings.setting["start_hidden"],
-              "minimize_to_tray": new_settings.setting["minimize_to_tray"],
-              "show_notifications": new_settings.setting["show_notifications"],
-              "play_sounds": new_settings.setting["play_sounds"],
-              "sound_files": new_settings.setting["sound_files"]
+                "mode": new_settings.setting["mode"],
+                "toggle_keybinding": new_settings.setting["toggle_keybinding"],
+                "ptt_keybinding": new_settings.setting["ptt_keybinding"],
+                "autorun": new_settings.setting["autorun"],
+                "start_hidden": new_settings.setting["start_hidden"],
+                "minimize_to_tray": new_settings.setting["minimize_to_tray"],
+                "show_notifications": new_settings.setting["show_notifications"],
+                "play_sounds": new_settings.setting["play_sounds"],
+                "sound_files": new_settings.setting["sound_files"],
+                "sound_volume": new_settings.setting["sound_volume"]
             }
             json.dump(json_settings, config_file)
 

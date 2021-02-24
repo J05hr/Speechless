@@ -1,10 +1,11 @@
 import sys
+import traceback
 from pathlib import Path
 from pynput import mouse, keyboard
 from PyQt5.QtWidgets import QApplication
 from Speechless.core import mic_controls, mute_sanity_thread
 from Speechless.gui import main_window, system_tray
-from Speechless.utils import settings_util, crash_utils
+from Speechless.utils import settings_util
 
 
 class Speechless:
@@ -18,34 +19,64 @@ class Speechless:
         self.win = None
         self.tray = None
         self.ptt_key_pushed = False
+        self.toggle_state = 'unmuted'
 
     def on_mouse_click(self, x, y, button, pressed):
-        if pressed:
-            # unmute if the keybinding is pressed
-            self.ptt_key_pushed = True
-            if str(button) == self.settings.setting['keybinding']:
-                mic_controls.unmute(self, self.settings.setting["play_sounds"])
+        mode = self.settings.setting['mode']
+        if mode == 'ptt':
+            if pressed:
+                # unmute if the keybinding is pressed
+                if str(button) == self.settings.setting['ptt_keybinding']:
+                    mic_controls.unmute(self)
+                self.ptt_key_pushed = True
+            else:
+                # mute if the keybinding is released
+                if str(button) == self.settings.setting['ptt_keybinding']:
+                    mic_controls.mute(self)
+                self.ptt_key_pushed = False
         else:
-            # mute if the keybinding is released
-            self.ptt_key_pushed = False
-            if str(button) == self.settings.setting['keybinding']:
-                mic_controls.mute(self, self.settings.setting["play_sounds"])
+            if pressed:
+                if str(button) == self.settings.setting['toggle_keybinding']:
+                    # toggle the mute
+                    if self.toggle_state == 'unmuted':
+                        mic_controls.mute(self)
+                        self.toggle_state = 'muted'
+                    else:
+                        mic_controls.unmute(self)
+                        self.toggle_state = 'unmuted'
 
     def on_key_press(self, key):
-        # unmute if the keybinding is pressed
-        self.ptt_key_pushed = True
-        if str(key) == self.settings.setting['keybinding']:
-            mic_controls.unmute(self, self.settings.setting["play_sounds"])
+        mode = self.settings.setting['mode']
+        if mode == 'ptt':
+            # unmute if the keybinding is pressed
+            key_str = str(key).strip('\'\\')
+            if key_str == self.settings.setting['ptt_keybinding']:
+                if not self.ptt_key_pushed:
+                    mic_controls.unmute(self)
+            self.ptt_key_pushed = True
+        else:
+            key_str = str(key).strip('\'\\')
+            if key_str == self.settings.setting['toggle_keybinding']:
+                # toggle the mute
+                if self.toggle_state == 'unmuted':
+                    mic_controls.mute(self)
+                    self.toggle_state = 'muted'
+                else:
+                    mic_controls.unmute(self)
+                    self.toggle_state = 'unmuted'
 
     def on_key_release(self, key):
-        self.ptt_key_pushed = False
-        # mute if the keybinding is released
-        if str(key) == self.settings.setting['keybinding']:
-            mic_controls.mute(self, self.settings.setting["play_sounds"])
+        mode = self.settings.setting['mode']
+        if mode == 'ptt':
+            # mute if the keybinding is released
+            key_str = str(key).strip('\'\\')
+            if key_str == self.settings.setting['ptt_keybinding']:
+                mic_controls.mute(self)
+            self.ptt_key_pushed = False
 
     def on_exit(self):
         # unmute on exit
-        mic_controls.unmute(self, self.settings.setting["play_sounds"])
+        mic_controls.unmute(self)
 
     def run(self):
         self.gui_app = QApplication(sys.argv)
@@ -58,8 +89,12 @@ class Speechless:
         if not self.settings.setting["start_hidden"]:
             self.win.show()
 
-        # start muted
-        mic_controls.mute(self, self.settings.setting["play_sounds"])
+        # start muted if ptt mode or un-muted if toggle mode
+        mode = self.settings.setting['mode']
+        if mode == 'ptt':
+            mic_controls.mute(self)
+        else:
+            mic_controls.unmute(self)
 
         # start the sanity check thread
         mst = mute_sanity_thread.MST(self)
@@ -81,9 +116,10 @@ if __name__ == '__main__':
 
     except Exception as e:
         # ensure the mic is left in an un-muted state
-        crash_utils.crash_unmute()
+        mic_controls.basic_unmute()
         # print error
         print("Fatal Error, " + str(e))
+        traceback.print_exc()
 
 
 

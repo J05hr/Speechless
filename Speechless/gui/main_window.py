@@ -1,9 +1,9 @@
-from PyQt5 import uic
-from PyQt5 import QtCore, QtWidgets
-from pathlib import Path
-from Speechless.gui import about_window, keybinding_window, custom_sounds_window
-from Speechless.utils import settings_util
 import pyaudio
+from pathlib import Path
+from PyQt5 import uic, QtCore, QtWidgets
+from Speechless.core import mic_controls
+from Speechless.utils import settings_util
+from Speechless.gui import about_window, ptt_keybinding_window, toggle_keybinding_window, custom_sounds_window
 
 
 FormClass, BaseClass = uic.loadUiType(str(Path.cwd()) + '\\layouts\\main_window.ui')
@@ -16,16 +16,29 @@ class MainWindow(BaseClass, FormClass):
         self.parent_app = app
         self.setupUi(self)
 
+        # windows
         self.about_win = about_window.AboutWindow()
-        self.keybinding_win = keybinding_window.KeyBindingWindow(app)
+        self.toggle_keybinding_win = toggle_keybinding_window.ToggleKeyBindingWindow(app)
+        self.ptt_keybinding_win = ptt_keybinding_window.PttKeyBindingWindow(app)
         self.custom_sounds_win = custom_sounds_window.CustomSoundsWindow(app)
 
-        self.mute_sound_filename = self.parent_app.settings.setting['sound_files'][0]['mute_sound']
-        self.unmute_sound_filename = self.parent_app.settings.setting['sound_files'][1]['unmute_sound']
+        # modes
+        self.action_toggle_mode = self.findChild(QtWidgets.QAction, 'actionToggleMode')
+        self.action_ptt_mode = self.findChild(QtWidgets.QAction, 'actionPTTMode')
+        if self.parent_app.settings.setting['mode'] == 'ptt':
+            self.action_ptt_mode.setChecked(True)
+        else:
+            self.action_toggle_mode.setChecked(True)
+        self.action_toggle_mode.triggered.connect(self.toggle_mode_action_cb)
+        self.action_ptt_mode.triggered.connect(self.ptt_mode_action_cb)
 
         # menu options
-        self.action_keybinding = self.findChild(QtWidgets.QAction, 'actionKeybinding')
-        self.action_keybinding.triggered.connect(self.key_action_cb)
+        self.action_toggle_keybinding = self.findChild(QtWidgets.QAction, 'actionTogglekeybinding')
+        self.action_toggle_keybinding.triggered.connect(self.toggle_key_action_cb)
+
+        self.action_ptt_keybinding = self.findChild(QtWidgets.QAction, 'actionPTTkeybinding')
+        self.action_ptt_keybinding.triggered.connect(self.ptt_key_action_cb)
+
         self.action_auto_run = self.findChild(QtWidgets.QAction, 'actionAutorun')
         if self.parent_app.settings.setting['autorun']:
             self.action_auto_run.setChecked(True)
@@ -63,9 +76,29 @@ class MainWindow(BaseClass, FormClass):
         self.current_device.setEnabled(False)
         self.menu_device.addAction(self.current_device)
 
-    # set key bindings
-    def key_action_cb(self):
-        self.keybinding_win.show()
+    # mode toggling
+    def toggle_mode_action_cb(self):
+        self.action_ptt_mode.setChecked(False)
+        self.parent_app.settings.setting['mode'] = 'toggle'
+        settings_util.write_settings(self.parent_app.settings)
+        # start toggle mode un-muted
+        mic_controls.unmute(self.parent_app)
+
+    # mode toggling
+    def ptt_mode_action_cb(self, mode):
+        self.action_toggle_mode.setChecked(False)
+        self.parent_app.settings.setting['mode'] = 'ptt'
+        settings_util.write_settings(self.parent_app.settings)
+        # start ptt mode umuted
+        mic_controls.mute(self.parent_app)
+
+    # set ptt key bindings
+    def ptt_key_action_cb(self):
+        self.ptt_keybinding_win.show()
+
+    # set toggle key bindings
+    def toggle_key_action_cb(self):
+        self.toggle_keybinding_win.show()
 
     # set autorun
     def ar_action_cb(self):
