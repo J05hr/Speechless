@@ -7,7 +7,7 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
     def __init__(self, icon_filename, app, main_window):
         icon = QtGui.QIcon(icon_filename)
         QtWidgets.QSystemTrayIcon.__init__(self, icon, parent=None)
-        self.app = app
+        self.parent_app = app
         self.main_window = main_window
         self.setToolTip('Speechless v1.0')
 
@@ -31,4 +31,4 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
     # quit application
     def quit_action_cb(self):
-        self.app.quit()
+        self.parent_app.quit()

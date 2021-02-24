@@ -2,6 +2,7 @@ import sys
 import traceback
 from pathlib import Path
 from pynput import mouse, keyboard
+from audioplayer import AudioPlayer
 from PyQt5.QtWidgets import QApplication
 from Speechless.core import mic_controls, mute_sanity_thread
 from Speechless.gui import main_window, system_tray
@@ -18,8 +19,13 @@ class Speechless:
         self.gui_app = None
         self.win = None
         self.tray = None
+        self.mst = None
+        self.m_listener = None
+        self.k_listener = None
         self.ptt_key_pushed = False
         self.toggle_state = 'unmuted'
+        self.mute_sound = AudioPlayer(self.settings.setting["sound_files"][0]["mute_sound"])
+        self.unmute_sound = AudioPlayer(self.settings.setting["sound_files"][1]["unmute_sound"])
 
     def on_mouse_click(self, x, y, button, pressed):
         mode = self.settings.setting['mode']
@@ -75,8 +81,13 @@ class Speechless:
             self.ptt_key_pushed = False
 
     def on_exit(self):
-        # unmute on exit
-        mic_controls.unmute(self)
+        # kill any existing threads
+        self.mst.stop()
+        self.mst.join()
+        self.m_listener.stop()
+        self.k_listener.stop()
+        # ensure unmute on exit
+        mic_controls.basic_unmute()
 
     def run(self):
         self.gui_app = QApplication(sys.argv)
@@ -97,29 +108,32 @@ class Speechless:
             mic_controls.unmute(self)
 
         # start the sanity check thread
-        mst = mute_sanity_thread.MST(self)
-        mst.start()
+        self.mst = mute_sanity_thread.MST(self)
+        self.mst.start()
 
         # listen for mouse and keyboard
-        m_listener = mouse.Listener(on_click=self.on_mouse_click)
-        k_listener = keyboard.Listener(on_press=self.on_key_press, on_release=self.on_key_release)
-        m_listener.start()
-        k_listener.start()
+        self.m_listener = mouse.Listener(on_click=self.on_mouse_click)
+        self.k_listener = keyboard.Listener(on_press=self.on_key_press, on_release=self.on_key_release)
+        self.m_listener.start()
+        self.k_listener.start()
 
         sys.exit(self.gui_app.exec())
 
 
 if __name__ == '__main__':
     try:
-        app = Speechless()
-        app.run()
+        speechless = Speechless()
+        speechless.run()
 
     except Exception as e:
-        # ensure the mic is left in an un-muted state
-        mic_controls.basic_unmute()
         # print error
         print("Fatal Error, " + str(e))
         traceback.print_exc()
+        # ensure the mic is left in an un-muted state
+        mic_controls.basic_unmute()
+        # reset the settings to default
+        settings_util.write_settings(settings_util.default_settings)
+
 
 
 

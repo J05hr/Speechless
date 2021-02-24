@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>353</width>
-    <height>185</height>
+    <width>457</width>
+    <height>165</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -147,7 +147,7 @@
           <enum>QFrame::Plain</enum>
          </property>
          <property name="text">
-          <string>Global push-to-talk functionality for the default input device.</string>
+          <string>Global microphone control for the default input device.</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -167,7 +167,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>353</width>
+     <width>457</width>
      <height>26</height>
     </rect>
    </property>
@@ -190,22 +190,6 @@
     <property name="title">
      <string>Options</string>
     </property>
-    <widget class="QMenu" name="menuKeybinding">
-     <property name="title">
-      <string>Keybinding</string>
-     </property>
-     <addaction name="actionTogglekeybinding"/>
-     <addaction name="actionPTTkeybinding"/>
-    </widget>
-    <widget class="QMenu" name="menuOperation_Mode">
-     <property name="title">
-      <string>Operation Mode</string>
-     </property>
-     <addaction name="actionPTTMode"/>
-     <addaction name="actionToggleMode"/>
-    </widget>
-    <addaction name="menuOperation_Mode"/>
-    <addaction name="menuKeybinding"/>
     <addaction name="actionAutorun"/>
     <addaction name="actionStart_hidden"/>
     <addaction name="actionMinimize_to_tray"/>
@@ -224,7 +208,7 @@
     </property>
     <widget class="QMenu" name="menuPlay_Sounds">
      <property name="title">
-      <string>Play Sounds</string>
+      <string>enable sounds</string>
      </property>
      <addaction name="actionEnableMuteSound"/>
      <addaction name="actionEnableUnmuteSound"/>
@@ -238,9 +222,25 @@
     </property>
     <addaction name="actionInfo"/>
    </widget>
+   <widget class="QMenu" name="menuKeybinding_2">
+    <property name="title">
+     <string>Keybinding</string>
+    </property>
+    <addaction name="actionPTTkeybinding"/>
+    <addaction name="actionTogglekeybinding"/>
+   </widget>
+   <widget class="QMenu" name="menuMode">
+    <property name="title">
+     <string>Mode</string>
+    </property>
+    <addaction name="actionPTTMode"/>
+    <addaction name="actionToggleMode"/>
+   </widget>
+   <addaction name="menuMode"/>
+   <addaction name="menuKeybinding_2"/>
    <addaction name="menuOptions"/>
-   <addaction name="menuDevice"/>
    <addaction name="menuNotifications"/>
+   <addaction name="menuDevice"/>
    <addaction name="menuAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -249,7 +249,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Autorun at startup</string>
+    <string>autorun at startup</string>
    </property>
   </action>
   <action name="actionShow_Notifications">
@@ -265,7 +265,7 @@
   </action>
   <action name="actionCustom_Sounds">
    <property name="text">
-    <string>Custom Sounds</string>
+    <string>customize sounds</string>
    </property>
   </action>
   <action name="actionStart_muted">
@@ -278,7 +278,7 @@
   </action>
   <action name="actionInfo">
    <property name="text">
-    <string>Info</string>
+    <string>info</string>
    </property>
   </action>
   <action name="actionMinimize_to_tray">
@@ -286,7 +286,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Minimize to tray</string>
+    <string>minimize to tray</string>
    </property>
   </action>
   <action name="actionStart_hidden">
@@ -294,7 +294,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Start hidden</string>
+    <string>start hidden</string>
    </property>
   </action>
   <action name="actionPTTMode">
@@ -302,7 +302,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Push-to-Talk Mode</string>
+    <string>push-to-talk mode</string>
    </property>
   </action>
   <action name="actionToggleMode">
@@ -310,17 +310,17 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Toggle Mode</string>
+    <string>toggle mode</string>
    </property>
   </action>
   <action name="actionTogglekeybinding">
    <property name="text">
-    <string>Set Toggle Key</string>
+    <string>set key for toggle mode</string>
    </property>
   </action>
   <action name="actionPTTkeybinding">
    <property name="text">
-    <string>Set PTT Key</string>
+    <string>set key for ptt mode</string>
    </property>
   </action>
   <action name="actionEnableMuteSound">
@@ -328,7 +328,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Enable mute sound</string>
+    <string>enable mute sound</string>
    </property>
   </action>
   <action name="actionEnableUnmuteSound">
@@ -336,7 +336,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Enable un-mute sound</string>
+    <string>enable un-mute sound</string>
    </property>
   </action>
  </widget>

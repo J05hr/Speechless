@@ -20,7 +20,7 @@ class CustomSoundsWindow(BaseClass, FormClass):
         self.mute_sound_filename = None
         self.unmute_sound_filename = None
 
-        self.volume_level = int(self.parent_app.settings.setting["sound_volume"]) * 100
+        self.volume_level = self.parent_app.settings.setting["sound_volume"] * 100
         self.volume_label = self.findChild(QtWidgets.QLabel, 'volumeLabel')
         self.volume_label.setText(str(self.volume_level))
         self.volume_slider = self.findChild(QtWidgets.QSlider, 'volumeSlider')
@@ -36,19 +36,21 @@ class CustomSoundsWindow(BaseClass, FormClass):
     def slider_cb(self):
         self.volume_label.setText(str(self.volume_slider.value()))
         self.volume_level = self.volume_slider.value()
-        self.parent_app.settings.setting["sound_volume"] = self.volume_slider / 100
+        self.parent_app.settings.setting["sound_volume"] = self.volume_level / 100
         settings_util.write_settings(self.parent_app.settings)
 
     def mute_browse_button_cb(self):
         self.mute_browse_dialog = QtWidgets.QFileDialog()
         path = sounds_dir
         self.mute_sound_filename = QtWidgets.QFileDialog.getOpenFileName(self.mute_browse_dialog, "", path)
-        self.parent_app.settings.setting["sound_files"][0]["mute_sound"] = self.mute_sound_filename[0]
-        settings_util.write_settings(self.parent_app.settings)
+        if self.mute_sound_filename[0] != "" and Path(self.mute_sound_filename[0]).is_file():
+            self.parent_app.settings.setting["sound_files"][0]["mute_sound"] = self.mute_sound_filename[0]
+            settings_util.write_settings(self.parent_app.settings)
 
     def unmute_browse_button_cb(self):
         self.unmute_browse_dialog = QtWidgets.QFileDialog()
         path = sounds_dir
         self.unmute_sound_filename = QtWidgets.QFileDialog.getOpenFileName(self.mute_browse_dialog, "", path)
-        self.parent_app.settings.setting["sound_files"][1]["unmute_sound"] = self.unmute_sound_filename[0]
-        settings_util.write_settings(self.parent_app.settings)
+        if self.mute_sound_filename[0] != "" and Path(self.mute_sound_filename[0]).is_file():
+            self.parent_app.settings.setting["sound_files"][1]["unmute_sound"] = self.unmute_sound_filename[0]
+            settings_util.write_settings(self.parent_app.settings)

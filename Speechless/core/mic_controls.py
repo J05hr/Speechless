@@ -1,8 +1,7 @@
-import playsound
-import pygame
 import win32api
 import win32gui
 from PyQt5 import QtGui
+
 
 WM_APPCOMMAND = 0x319
 APPCOMMAND_MICROPHONE_VOLUME_MUTE = 0x180000
@@ -20,8 +19,12 @@ def mute(app):
     win32api.SendMessage(hwnd_active, WM_APPCOMMAND, None, APPCOMMAND_MICROPHONE_VOLUME_UP)
     win32api.SendMessage(hwnd_active, WM_APPCOMMAND, None, APPCOMMAND_MICROPHONE_VOLUME_MUTE)
     # play unmute sound
-    if current_settings.setting["play_sounds"]:
-        playsound.playsound(current_settings.setting["sound_files"][0]["mute_sound"])
+    if current_settings.setting["enable_mute_sound"]:
+        try:
+            app.mute_sound.volume = int(current_settings.setting["sound_volume"] * 100)
+            app.mute_sound.play(block=False)
+        except Exception as e:
+            pass
 
 
 # unmute if not unmuted
@@ -33,8 +36,12 @@ def unmute(app):
     win32api.SendMessage(hwnd_active, WM_APPCOMMAND, None, APPCOMMAND_MICROPHONE_VOLUME_DOWN)
     win32api.SendMessage(hwnd_active, WM_APPCOMMAND, None, APPCOMMAND_MICROPHONE_VOLUME_UP)
     # play unmute sound
-    if current_settings.setting["play_sounds"]:
-        playsound.playsound(current_settings.setting["sound_files"][1]["unmute_sound"])
+    if current_settings.setting["enable_unmute_sound"]:
+        try:
+            app.unmute_sound.volume = int(current_settings.setting["sound_volume"] * 100)
+            app.unmute_sound.play(block=False)
+        except Exception as e:
+            pass
 
 
 def basic_unmute():

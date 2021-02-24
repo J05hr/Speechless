@@ -8,6 +8,7 @@ class MST (threading.Thread):
     def __init__(self, app):
         threading.Thread.__init__(self)
         self.parent_app = app
+        self.kill = False
 
     def mute_sanity_check_fix(self):
         mode = self.parent_app.settings.setting['mode']
@@ -22,7 +23,10 @@ class MST (threading.Thread):
                 mic_controls.basic_unmute()
 
     def run(self):
-        # 5 sec sleep loop to run the sanity check
-        while True:
-            time.sleep(5)
+        # 1 sec sleep loop to run the sanity check
+        while not self.kill:
+            time.sleep(1)
             self.mute_sanity_check_fix()
+
+    def stop(self):
+        self.kill = True

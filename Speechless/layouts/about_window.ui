@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>539</width>
-    <height>204</height>
+    <width>567</width>
+    <height>205</height>
    </rect>
   </property>
   <property name="font">
@@ -82,7 +82,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Github :</string>
+         <string>Github/Readme :</string>
         </property>
        </widget>
       </item>

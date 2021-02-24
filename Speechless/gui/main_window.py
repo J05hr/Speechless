@@ -57,10 +57,14 @@ class MainWindow(BaseClass, FormClass):
         if self.parent_app.settings.setting['show_notifications']:
             self.action_show_notifications.setChecked(True)
         self.action_show_notifications.triggered.connect(self.sn_action_cb)
-        self.action_play_sounds = self.findChild(QtWidgets.QAction, 'actionPlay_Sounds')
-        if self.parent_app.settings.setting['play_sounds']:
-            self.action_play_sounds.setChecked(True)
-        self.action_play_sounds.triggered.connect(self.ps_action_cb)
+        self.action_enable_mute_sound = self.findChild(QtWidgets.QAction, 'actionEnableMuteSound')
+        if self.parent_app.settings.setting['enable_mute_sound']:
+            self.action_enable_mute_sound.setChecked(True)
+        self.action_enable_unmute_sound = self.findChild(QtWidgets.QAction, 'actionEnableUnmuteSound')
+        if self.parent_app.settings.setting['enable_unmute_sound']:
+            self.action_enable_unmute_sound.setChecked(True)
+        self.action_enable_mute_sound.triggered.connect(self.ems_action_cb)
+        self.action_enable_unmute_sound.triggered.connect(self.eus_action_cb)
         self.action_custom_sounds = self.findChild(QtWidgets.QAction, 'actionCustom_Sounds')
         self.action_custom_sounds.triggered.connect(self.cs_action_cb)
 
@@ -140,12 +144,20 @@ class MainWindow(BaseClass, FormClass):
             self.parent_app.settings.setting['show_notifications'] = False
         settings_util.write_settings(self.parent_app.settings)
 
-    # set play sounds
-    def ps_action_cb(self):
-        if self.action_play_sounds.isChecked():
-            self.parent_app.settings.setting['play_sounds'] = True
+    # set enable mute sound
+    def ems_action_cb(self):
+        if self.action_enable_mute_sound.isChecked():
+            self.parent_app.settings.setting['enable_mute_sound'] = True
         else:
-            self.parent_app.settings.setting['play_sounds'] = False
+            self.parent_app.settings.setting['enable_mute_sound'] = False
+        settings_util.write_settings(self.parent_app.settings)
+
+    # set enable unmute sound
+    def eus_action_cb(self):
+        if self.action_enable_unmute_sound.isChecked():
+            self.parent_app.settings.setting['enable_unmute_sound'] = True
+        else:
+            self.parent_app.settings.setting['enable_unmute_sound'] = False
         settings_util.write_settings(self.parent_app.settings)
 
     # set custom sounds
