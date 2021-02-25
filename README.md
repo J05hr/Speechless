@@ -36,7 +36,7 @@ This allows the user to enjoy a push-to-talk experience where they normally woul
 - Now simply run the ```speechless v1.0.exe``` and establish your preferred settings.
 
 
-##Usage
+## Usage
 
 - Opening and Exiting:
   - To open the program simply run ```speechless v1.0.exe```. If the window is hidden you may open it from the system-tray icon.
