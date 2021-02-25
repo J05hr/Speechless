@@ -7,9 +7,9 @@ sounds_dir = rel_dir + '\\sounds'
 config_dir = rel_dir + '\\config'
 config_filename = config_dir + '\\config.json'
 
-# defaults: (ptt mode, y key, t key, autorun, don't start hidden, minimize to tray, don't show notifications,
+# defaults: (ptt mode, y key, t key, don't autorun, don't start hidden, minimize to tray, don't show notifications,
 #            enable mute sound, enable unmute sound, default sounds, 50% volume)
-default_settings = settings.Settings('ptt', 'y', 't', True, False, True, False, True, True,
+default_settings = settings.Settings('ptt', 'y', 't', False, False, True, False, True, True,
                                      [{"mute_sound": sounds_dir+'\\beep300.wav'},
                                          {"unmute_sound": sounds_dir+'\\beep750.wav'}], 0.5)
 

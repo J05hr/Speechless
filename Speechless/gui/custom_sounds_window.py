@@ -1,6 +1,5 @@
-from PyQt5 import uic
-from PyQt5 import QtWidgets
 from pathlib import Path
+from PyQt5 import uic, QtGui, QtWidgets
 from Speechless.utils import settings_util
 
 
@@ -14,6 +13,7 @@ class CustomSoundsWindow(BaseClass, FormClass):
         super(CustomSoundsWindow, self).__init__()
         self.parent_app = app
         self.setupUi(self)
+        self.setWindowIcon(QtGui.QIcon(app.icons_dir + '\\mic.png'))
 
         self.mute_browse_dialog = None
         self.unmute_browse_dialog = None
@@ -51,6 +51,6 @@ class CustomSoundsWindow(BaseClass, FormClass):
         self.unmute_browse_dialog = QtWidgets.QFileDialog()
         path = sounds_dir
         self.unmute_sound_filename = QtWidgets.QFileDialog.getOpenFileName(self.mute_browse_dialog, "", path)
-        if self.mute_sound_filename[0] != "" and Path(self.mute_sound_filename[0]).is_file():
+        if self.unmute_sound_filename[0] != "" and Path(self.unmute_sound_filename[0]).is_file():
             self.parent_app.settings.setting["sound_files"][1]["unmute_sound"] = self.unmute_sound_filename[0]
             settings_util.write_settings(self.parent_app.settings)

@@ -2,11 +2,10 @@ import sys
 import traceback
 from pathlib import Path
 from pynput import mouse, keyboard
-from audioplayer import AudioPlayer
 from PyQt5.QtWidgets import QApplication
-from Speechless.core import mic_controls, mute_sanity_thread
+from Speechless.core import mic_controls, mute_sanity_thread, input_read_thread
 from Speechless.gui import main_window, system_tray
-from Speechless.utils import settings_util
+from Speechless.utils import settings_util, autorun_utils
 
 
 class Speechless:
@@ -20,12 +19,14 @@ class Speechless:
         self.win = None
         self.tray = None
         self.mst = None
+        self.irt = None
         self.m_listener = None
         self.k_listener = None
         self.ptt_key_pushed = False
         self.toggle_state = 'unmuted'
-        self.mute_sound = AudioPlayer(self.settings.setting["sound_files"][0]["mute_sound"])
-        self.unmute_sound = AudioPlayer(self.settings.setting["sound_files"][1]["unmute_sound"])
+        self.input_level = None
+        self.mute_sound = None
+        self.unmute_sound = None
 
     def on_mouse_click(self, x, y, button, pressed):
         mode = self.settings.setting['mode']
@@ -84,6 +85,8 @@ class Speechless:
         # kill any existing threads
         self.mst.stop()
         self.mst.join()
+        self.irt.stop()
+        self.irt.join()
         self.m_listener.stop()
         self.k_listener.stop()
         # ensure unmute on exit
@@ -107,8 +110,17 @@ class Speechless:
         else:
             mic_controls.unmute(self)
 
-        # start the sanity check thread
+        # add autostart if set
+        autorun = self.settings.setting['autorun']
+        if autorun:
+            autorun_utils.add_autorun()
+        else:
+            autorun_utils.remove_autorun()
+
+        # start the sanity check thread and the input reader thread
         self.mst = mute_sanity_thread.MST(self)
+        self.irt = input_read_thread.IRT(self)
+        self.irt.start()
         self.mst.start()
 
         # listen for mouse and keyboard

@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>Info</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../icons/mic.png</normaloff>../icons/mic.png</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QFrame" name="frame_2">

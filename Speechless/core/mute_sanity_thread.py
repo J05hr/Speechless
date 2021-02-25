@@ -14,12 +14,12 @@ class MST (threading.Thread):
         mode = self.parent_app.settings.setting['mode']
         if mode == 'ptt':
             # as long as the button is not pushed ensure the mic is muted in_case of external changes
-            if not self.parent_app.ptt_key_pushed:
+            if not self.parent_app.ptt_key_pushed and self.parent_app.input_level > 0:
                 mic_controls.basic_mute()
         else:
-            if self.parent_app.toggle_state == 'muted':
+            if self.parent_app.toggle_state == 'muted' and self.parent_app.input_level > 0:
                 mic_controls.basic_mute()
-            else:
+            elif self.parent_app.toggle_state == 'unmuted' and self.parent_app.input_level == 0:
                 mic_controls.basic_unmute()
 
     def run(self):

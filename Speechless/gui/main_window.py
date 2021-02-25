@@ -1,8 +1,8 @@
 import pyaudio
 from pathlib import Path
-from PyQt5 import uic, QtCore, QtWidgets
+from PyQt5 import uic, QtCore, QtWidgets, QtGui
 from Speechless.core import mic_controls
-from Speechless.utils import settings_util
+from Speechless.utils import settings_util, autorun_utils
 from Speechless.gui import about_window, ptt_keybinding_window, toggle_keybinding_window, custom_sounds_window
 
 
@@ -15,12 +15,13 @@ class MainWindow(BaseClass, FormClass):
 
         self.parent_app = app
         self.setupUi(self)
+        self.setWindowIcon(QtGui.QIcon(app.icons_dir + '\\mic.png'))
 
         # windows
-        self.about_win = about_window.AboutWindow()
-        self.toggle_keybinding_win = toggle_keybinding_window.ToggleKeyBindingWindow(app)
-        self.ptt_keybinding_win = ptt_keybinding_window.PttKeyBindingWindow(app)
-        self.custom_sounds_win = custom_sounds_window.CustomSoundsWindow(app)
+        self.about_win = about_window.AboutWindow(self.parent_app)
+        self.toggle_keybinding_win = toggle_keybinding_window.ToggleKeyBindingWindow(self.parent_app)
+        self.ptt_keybinding_win = ptt_keybinding_window.PttKeyBindingWindow(self.parent_app)
+        self.custom_sounds_win = custom_sounds_window.CustomSoundsWindow(self.parent_app)
 
         # modes
         self.action_toggle_mode = self.findChild(QtWidgets.QAction, 'actionToggleMode')
@@ -108,8 +109,10 @@ class MainWindow(BaseClass, FormClass):
     def ar_action_cb(self):
         if self.action_auto_run.isChecked():
             self.parent_app.settings.setting['autorun'] = True
+            autorun_utils.add_autorun()
         else:
             self.parent_app.settings.setting['autorun'] = False
+            autorun_utils.remove_autorun()
         settings_util.write_settings(self.parent_app.settings)
 
     # set start hidden

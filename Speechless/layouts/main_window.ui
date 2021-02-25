@@ -23,7 +23,11 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Speechless</string>
+   <string>Speechless v1.0</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../icons/mic.png</normaloff>../icons/mic.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">
