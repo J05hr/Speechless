@@ -1,5 +1,6 @@
 import win32api
 import win32gui
+import traceback
 from PyQt5 import QtGui
 from audioplayer import AudioPlayer
 
@@ -26,10 +27,12 @@ def mute(app):
             app.mute_sound.volume = int(current_settings.setting["sound_volume"] * 100)
             app.mute_sound.play(block=False)
         except Exception as e:
-            pass
+            # print error
+            print("Error Playing Mute Sound, " + str(e))
+            traceback.print_exc()
 
 
-# unmute if not unmuted
+# unmute if not un-muted
 def unmute(app):
     current_settings = app.settings
     app.tray.setIcon(QtGui.QIcon(app.icons_dir + '\\unmutemic.png'))
@@ -44,7 +47,9 @@ def unmute(app):
             app.unmute_sound.volume = int(current_settings.setting["sound_volume"] * 100)
             app.unmute_sound.play(block=False)
         except Exception as e:
-            pass
+            # print error
+            print("Error Playing Un-mute Sound, " + str(e))
+            traceback.print_exc()
 
 
 def basic_unmute():

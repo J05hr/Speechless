@@ -1,4 +1,3 @@
-import time
 import threading
 import sounddevice as sd
 import numpy as np
