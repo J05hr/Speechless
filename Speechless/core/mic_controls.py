@@ -2,7 +2,8 @@ import win32api
 import win32gui
 import traceback
 from PyQt5 import QtGui
-from audioplayer import AudioPlayer
+from Speechless.utils import files_util
+from Speechless.core import sound_output_thread
 
 
 WM_APPCOMMAND = 0x319
@@ -13,42 +14,46 @@ APPCOMMAND_MICROPHONE_VOLUME_DOWN = 0x19 * 0x10000
 
 # mute if not muted
 def mute(app):
-    current_settings = app.settings
-    app.tray.setIcon(QtGui.QIcon(app.icons_dir + '\\mutemic.png'))
+    icon_filepath = files_util.get_icons_dir().joinpath('mutemic.png')
+    files_util.file_check(icon_filepath)
+    app.tray.setIcon(QtGui.QIcon(str(icon_filepath)))
     # win32 app command
     hwnd_active = win32gui.GetForegroundWindow()
     win32api.SendMessage(hwnd_active, WM_APPCOMMAND, None, APPCOMMAND_MICROPHONE_VOLUME_DOWN)
     win32api.SendMessage(hwnd_active, WM_APPCOMMAND, None, APPCOMMAND_MICROPHONE_VOLUME_UP)
     win32api.SendMessage(hwnd_active, WM_APPCOMMAND, None, APPCOMMAND_MICROPHONE_VOLUME_MUTE)
-    # play unmute sound
-    if current_settings.setting["enable_mute_sound"]:
+    if app.settings.setting["enable_mute_sound"]:
+        # play mute sound
         try:
-            app.mute_sound = AudioPlayer(current_settings.setting["sound_files"][0]["mute_sound"])
-            app.mute_sound.volume = int(current_settings.setting["sound_volume"] * 100)
-            app.mute_sound.play(block=False)
-        except Exception as e:
+            sound_output_thread.SOT(
+                app.settings.setting["sound_files"][0]["mute_sound"],
+                int(app.settings.setting["sound_volume"] * 100)
+            ).start()
+        except Exception as s_e:
             # print error
-            print("Error Playing Mute Sound, " + str(e))
+            print("Error Playing Mute Sound, " + str(s_e))
             traceback.print_exc()
 
 
 # unmute if not un-muted
 def unmute(app):
-    current_settings = app.settings
-    app.tray.setIcon(QtGui.QIcon(app.icons_dir + '\\unmutemic.png'))
+    icon_filepath = files_util.get_icons_dir().joinpath('unmutemic.png')
+    files_util.file_check(icon_filepath)
+    app.tray.setIcon(QtGui.QIcon(str(icon_filepath)))
     # win32 app command
     hwnd_active = win32gui.GetForegroundWindow()
     win32api.SendMessage(hwnd_active, WM_APPCOMMAND, None, APPCOMMAND_MICROPHONE_VOLUME_DOWN)
     win32api.SendMessage(hwnd_active, WM_APPCOMMAND, None, APPCOMMAND_MICROPHONE_VOLUME_UP)
-    # play unmute sound
-    if current_settings.setting["enable_unmute_sound"]:
+    if app.settings.setting["enable_unmute_sound"]:
+        # play unmute sound
         try:
-            app.unmute_sound = AudioPlayer(current_settings.setting["sound_files"][1]["unmute_sound"])
-            app.unmute_sound.volume = int(current_settings.setting["sound_volume"] * 100)
-            app.unmute_sound.play(block=False)
-        except Exception as e:
+            sound_output_thread.SOT(
+                app.settings.setting["sound_files"][1]["unmute_sound"],
+                int(app.settings.setting["sound_volume"] * 100)
+            ).start()
+        except Exception as s_e:
             # print error
-            print("Error Playing Un-mute Sound, " + str(e))
+            print("Error Playing Unmute Sound, " + str(s_e))
             traceback.print_exc()
 
 

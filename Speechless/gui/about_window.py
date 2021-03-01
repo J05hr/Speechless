@@ -1,13 +1,16 @@
 from PyQt5 import uic, QtGui
-from pathlib import Path
+from Speechless.utils import files_util
 
 
-reldir = str(Path.cwd())
-FormClass, BaseClass = uic.loadUiType(reldir + '\\layouts\\about_window.ui')
+about_window_layout_file = files_util.get_layouts_dir().joinpath('about_window.ui')
+files_util.file_check(about_window_layout_file)
+FormClass, BaseClass = uic.loadUiType(about_window_layout_file)
 
 
 class AboutWindow(BaseClass, FormClass):
-    def __init__(self, app):
+    def __init__(self):
         super(AboutWindow, self).__init__()
         self.setupUi(self)
-        self.setWindowIcon(QtGui.QIcon(app.icons_dir + '\\mic.png'))
+        icon_filepath = files_util.get_icons_dir().joinpath('mic.png')
+        files_util.file_check(icon_filepath)
+        self.setWindowIcon(QtGui.QIcon(str(icon_filepath)))

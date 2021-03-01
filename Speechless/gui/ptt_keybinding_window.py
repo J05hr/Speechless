@@ -1,17 +1,20 @@
-from pathlib import Path
 from pynput import mouse, keyboard
 from PyQt5 import uic, QtWidgets, QtGui
-from Speechless.utils import settings_util
+from Speechless.utils import settings_util, files_util
 
 
-FormClass, BaseClass = uic.loadUiType(str(Path.cwd()) + '\\layouts\\ptt_keybinding_window.ui')
+ptt_keybinding_window_layout_file = files_util.get_layouts_dir().joinpath('ptt_keybinding_window.ui')
+files_util.file_check(ptt_keybinding_window_layout_file)
+FormClass, BaseClass = uic.loadUiType(ptt_keybinding_window_layout_file)
 
 
 class PttKeyBindingWindow(BaseClass, FormClass):
     def __init__(self, app):
         super(PttKeyBindingWindow, self).__init__()
         self.setupUi(self)
-        self.setWindowIcon(QtGui.QIcon(app.icons_dir + '\\mic.png'))
+        icon_filepath = files_util.get_icons_dir().joinpath('mic.png')
+        files_util.file_check(icon_filepath)
+        self.setWindowIcon(QtGui.QIcon(str(icon_filepath)))
 
         self.parent_app = app
         self.ptt_key_input_text = self.findChild(QtWidgets.QLineEdit, 'PttKeybinding')
