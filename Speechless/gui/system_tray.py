@@ -5,7 +5,7 @@ from PyQt5 import QtCore
 
 class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
     def __init__(self, icon_filename, app, main_window):
-        icon = QtGui.QIcon(icon_filename)
+        icon = QtGui.QIcon(str(icon_filename))
         QtWidgets.QSystemTrayIcon.__init__(self, icon, parent=None)
         self.parent_app = app
         self.main_window = main_window

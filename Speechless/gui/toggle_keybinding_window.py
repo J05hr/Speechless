@@ -1,17 +1,20 @@
-from pathlib import Path
 from pynput import mouse, keyboard
 from PyQt5 import uic, QtWidgets, QtGui
-from Speechless.utils import settings_util
+from Speechless.utils import settings_util, files_util
 
 
-FormClass, BaseClass = uic.loadUiType(str(Path.cwd()) + '\\layouts\\toggle_keybinding_window.ui')
+toggle_keybinding_window_layout_file = files_util.get_layouts_dir().joinpath('toggle_keybinding_window.ui')
+files_util.file_check(toggle_keybinding_window_layout_file)
+FormClass, BaseClass = uic.loadUiType(toggle_keybinding_window_layout_file)
 
 
 class ToggleKeyBindingWindow(BaseClass, FormClass):
     def __init__(self, app):
         super(ToggleKeyBindingWindow, self).__init__()
         self.setupUi(self)
-        self.setWindowIcon(QtGui.QIcon(app.icons_dir + '\\mic.png'))
+        icon_filepath = files_util.get_icons_dir().joinpath('mic.png')
+        files_util.file_check(icon_filepath)
+        self.setWindowIcon(QtGui.QIcon(str(icon_filepath)))
 
         self.parent_app = app
         self.toggle_key_input_text = self.findChild(QtWidgets.QLineEdit, 'ToggleKeybinding')
