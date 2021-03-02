@@ -6,6 +6,7 @@ sounds_dir = cwd.joinpath('sounds')
 layouts_dir = cwd.joinpath('layouts')
 config_dir = cwd.joinpath('config')
 icons_dir = cwd.joinpath('icons')
+log_dir = cwd.joinpath('log')
 
 
 def get_cwd():
@@ -41,6 +42,13 @@ def get_icons_dir():
         return icons_dir
     else:
         raise NotADirectoryError(f"Required directory {icons_dir} doesn't exist")
+
+
+def get_log_dir():
+    if Path.exists(log_dir):
+        return log_dir
+    else:
+        raise NotADirectoryError(f"Required directory {log_dir} doesn't exist")
 
 
 def file_check(path):

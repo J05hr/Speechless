@@ -2,7 +2,7 @@ import threading
 from Speechless.core import audio_player
 
 
-class SOT (threading.Thread):
+class SoundOutputThread (threading.Thread):
 
     def __init__(self, filename, volume):
         threading.Thread.__init__(self)

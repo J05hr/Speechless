@@ -1,6 +1,5 @@
 import win32api
 import win32gui
-import traceback
 from PyQt5 import QtGui
 from Speechless.utils import files_util
 from Speechless.core import sound_output_thread
@@ -13,7 +12,7 @@ APPCOMMAND_MICROPHONE_VOLUME_DOWN = 0x19 * 0x10000
 
 
 # mute if not muted
-def mute(app):
+def mute(app, logger):
     icon_filepath = files_util.get_icons_dir().joinpath('mutemic.png')
     files_util.file_check(icon_filepath)
     app.tray.setIcon(QtGui.QIcon(str(icon_filepath)))
@@ -25,18 +24,15 @@ def mute(app):
     if app.settings.setting["enable_mute_sound"]:
         # play mute sound
         try:
-            sound_output_thread.SOT(
+            sound_output_thread.SoundOutputThread(
                 app.settings.setting["sound_files"][0]["mute_sound"],
-                int(app.settings.setting["sound_volume"] * 100)
-            ).start()
+                int(app.settings.setting["sound_volume"] * 100)).start()
         except Exception as s_e:
-            # print error
-            print("Error Playing Mute Sound, " + str(s_e))
-            traceback.print_exc()
+            logger.error("Error playing mute sound, " + str(s_e), exc_info=True)
 
 
 # unmute if not un-muted
-def unmute(app):
+def unmute(app, logger):
     icon_filepath = files_util.get_icons_dir().joinpath('unmutemic.png')
     files_util.file_check(icon_filepath)
     app.tray.setIcon(QtGui.QIcon(str(icon_filepath)))
@@ -47,14 +43,11 @@ def unmute(app):
     if app.settings.setting["enable_unmute_sound"]:
         # play unmute sound
         try:
-            sound_output_thread.SOT(
+            sound_output_thread.SoundOutputThread(
                 app.settings.setting["sound_files"][1]["unmute_sound"],
-                int(app.settings.setting["sound_volume"] * 100)
-            ).start()
+                int(app.settings.setting["sound_volume"] * 100)).start()
         except Exception as s_e:
-            # print error
-            print("Error Playing Unmute Sound, " + str(s_e))
-            traceback.print_exc()
+            logger.error("Error playing unmute sound, " + str(s_e), exc_info=True)
 
 
 def basic_unmute():

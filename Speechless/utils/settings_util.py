@@ -17,7 +17,7 @@ default_settings = settings.Settings('ptt', 'y', 't', False, False, True, True, 
 
 
 # try to read the last settings or fallback to defaults
-def read_settings():
+def read_settings(logger):
     try:
         with open(config_filename, "r") as config_file:
             current_settings = json.load(config_file)
@@ -34,26 +34,23 @@ def read_settings():
         # update sounds to default if None
         if current_settings["sound_files"][0]["mute_sound"] is None:
             current_settings["sound_files"][0]["mute_sound"] = str(sounds_dir.joinpath('beep300.wav'))
-            write_settings(current_settings)
+            write_settings(current_settings, logger)
         if current_settings["sound_files"][1]["unmute_sound"] is None:
             current_settings["sound_files"][1]["unmute_sound"] = str(sounds_dir.joinpath('beep750.wav'))
-            write_settings(current_settings)
+            write_settings(current_settings, logger)
         sound_volume = current_settings["sound_volume"]
 
         return settings.Settings(mode, toggle_keybinding, ptt_keybinding, autorun, start_hidden, minimize_to_tray,
                                  enable_mute_sound, enable_unmute_sound, sound_files, sound_volume)
 
     except Exception as e:
-        # print error
-        print(str(e))
-
-        # fallback to defaults, overwrite the corrupted config and return defaults
-        write_settings(default_settings)
+        logger.error("Error reading settings, " + str(e), exc_info=True)
+        write_settings(default_settings, logger)  # fallback to defaults, overwrite the corrupted config
         return default_settings
 
 
 # try to write the settings or fallback to defaults
-def write_settings(new_settings):
+def write_settings(new_settings, logger):
     try:
         with open(config_filename, "w") as config_file:
             json_settings = {
@@ -71,9 +68,6 @@ def write_settings(new_settings):
             json.dump(json_settings, config_file)
 
     except Exception as e:
-        # print error
-        print(str(e))
-
-        # fallback to defaults
-        with open(config_filename, "w") as config_file:
+        logger.error("Error writing settings, " + str(e), exc_info=True)
+        with open(config_filename, "w") as config_file:  # fallback to defaults
             json.dump(default_settings, config_file)

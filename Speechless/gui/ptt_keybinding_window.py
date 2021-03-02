@@ -25,32 +25,32 @@ class PttKeyBindingWindow(BaseClass, FormClass):
         self.save_button = self.findChild(QtWidgets.QPushButton, 'saveButton')
         self.save_button.clicked.connect(self.save_button_cb)
 
-        self.kl = None
-        self.ml = None
+        self.keyboard_listener = None
+        self.mouse_listener = None
 
     def on_click(self, x, y, button, pressed):
         self.ptt_key_input_text.setText(str(button))
         self.ptt_keybinding = str(button)
-        self.kl.stop()
-        self.ml.stop()
+        self.keyboard_listener.stop()
+        self.mouse_listener.stop()
 
     def on_press(self, key):
         key_str = str(key).strip('\'\\')
         self.ptt_key_input_text.setText(key_str)
         self.ptt_keybinding = key_str
-        self.kl.stop()
-        self.ml.stop()
+        self.keyboard_listener.stop()
+        self.mouse_listener.stop()
 
     def listen_button_cb(self):
-        self.kl = keyboard.Listener(on_press=self.on_press)
-        self.ml = mouse.Listener(on_click=self.on_click)
-        self.kl.start()
-        self.ml.start()
+        self.keyboard_listener = keyboard.Listener(on_press=self.on_press)
+        self.mouse_listener = mouse.Listener(on_click=self.on_click)
+        self.keyboard_listener.start()
+        self.mouse_listener.start()
 
     def save_button_cb(self):
         if self.ptt_keybinding:
             self.parent_app.settings.setting["ptt_keybinding"] = self.ptt_keybinding
-            settings_util.write_settings(self.parent_app.settings)
+            settings_util.write_settings(self.parent_app.settings, self.parent_app.logger)
             self.hide()
 
 
