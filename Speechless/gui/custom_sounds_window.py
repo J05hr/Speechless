@@ -31,9 +31,9 @@ class CustomSoundsWindow(BaseClass, FormClass):
         self.unmute_browse_button = self.findChild(QtWidgets.QPushButton, 'unmuteBrowseButton')
         self.unmute_browse_button.clicked.connect(self.unmute_browse_button_cb)
         self.mute_filename_text = self.findChild(QtWidgets.QLineEdit, 'muteSoundName')
-        self.mute_filename_text.setText(Path(self.parent_app.settings.setting["sound_files"][0]["mute_sound"]).name)
+        self.mute_filename_text.setText(self.parent_app.settings.setting["sound_files"][0]["mute_sound"])
         self.unmute_filename_text = self.findChild(QtWidgets.QLineEdit, 'unmuteSoundName')
-        self.unmute_filename_text.setText(Path(self.parent_app.settings.setting["sound_files"][1]["unmute_sound"]).name)
+        self.unmute_filename_text.setText(self.parent_app.settings.setting["sound_files"][1]["unmute_sound"])
 
         # Volume controls
         self.volume_level = self.parent_app.settings.setting["sound_volume"] * 100
@@ -56,8 +56,8 @@ class CustomSoundsWindow(BaseClass, FormClass):
         sounds_dir = files_util.get_sounds_dir()
         self.mute_sound_filename = QtWidgets.QFileDialog.getOpenFileName(self.mute_browse_dialog, "", str(sounds_dir))
         if self.mute_sound_filename[0] != "" and Path(self.mute_sound_filename[0]).is_file():
-            self.parent_app.settings.setting["sound_files"][0]["mute_sound"] = self.mute_sound_filename[0]
-            self.mute_filename_text.setText(Path(self.parent_app.settings.setting["sound_files"][0]["mute_sound"]).name)
+            self.parent_app.settings.setting["sound_files"][0]["mute_sound"] = Path(self.mute_sound_filename[0]).name
+            self.mute_filename_text.setText(self.parent_app.settings.setting["sound_files"][0]["mute_sound"])
             settings_util.write_settings(self.parent_app.settings, self.parent_app.logger)
 
     def unmute_browse_button_cb(self):
@@ -66,6 +66,6 @@ class CustomSoundsWindow(BaseClass, FormClass):
         sounds_dir = files_util.get_sounds_dir()
         self.unmute_sound_filename = QtWidgets.QFileDialog.getOpenFileName(self.mute_browse_dialog, "", str(sounds_dir))
         if self.unmute_sound_filename[0] != "" and Path(self.unmute_sound_filename[0]).is_file():
-            self.parent_app.settings.setting["sound_files"][1]["unmute_sound"] = self.unmute_sound_filename[0]
-            self.unmute_filename_text.setText(Path(self.parent_app.settings.setting["sound_files"][1]["unmute_sound"]).name)
+            self.parent_app.settings.setting["sound_files"][1]["unmute_sound"] = Path(self.unmute_sound_filename[0]).name
+            self.unmute_filename_text.setText(self.parent_app.settings.setting["sound_files"][1]["unmute_sound"])
             settings_util.write_settings(self.parent_app.settings, self.parent_app.logger)

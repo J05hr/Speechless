@@ -1,6 +1,9 @@
 from ctypes import windll
 
 
+win_lib = windll.winmm
+
+
 class PlayerError(Exception):
     """Basic exception for errors raised by Player."""
     pass
@@ -18,20 +21,35 @@ class Player:
         self.alias = str(id(self))
         self.filepath = filepath
         self.volume = 100
+        self.loaded = -1
         self.load_player()
 
     def __del__(self):
-        self.close()
+        if self.loaded == 0:  # close on delete if successfully loaded previously
+            self.close()
 
     @staticmethod
     def mci_send_string(command):
-        return windll.winmm.mciSendStringW(command, None, 0, 0)
+        return win_lib.mciSendStringW(command, 0, 0, 0)
 
     def get_filename(self):
         return self.filepath
 
     def get_volume(self):
         return self.volume
+
+    def load_player(self):
+        """
+        Establishes a sound player on windows based on this Players alias and filepath.
+
+        Returns:
+            ret(int): A status code from the call to windll.winmm.mciSendStringW().
+        """
+        ret = self.mci_send_string(f'open "{self.filepath}" type mpegvideo alias {self.alias}')
+        self.loaded = ret
+        if ret != 0:
+            raise PlayerError(f'Failed to load player for {self.filepath}, Error code {ret}')
+        return ret
 
     def set_volume(self, value):
         """
@@ -42,21 +60,9 @@ class Player:
         """
         value = max(min(value, 100), 0)  # clamp to [0..100]
         self.volume = int(value * 10)  # MCI volume: 0...1000
-        ret = self.mci_send_string('setaudio {} volume to {}'.format(self.alias, self.volume))
+        ret = self.mci_send_string(f'setaudio {self.alias} volume to {self.volume}')
         if ret != 0:
-            raise PlayerError('Failed to set_volume for alias "{}"'.format(self.alias))
-
-    def load_player(self):
-        """
-        Establishes a sound player on windows based on this Players alias and filepath.
-
-        Returns:
-            ret(int): A status code from the call to windll.winmm.mciSendStringW().
-        """
-        ret = self.mci_send_string('open "{}" type mpegvideo alias {}'.format(self.filepath, self.alias))
-        if ret != 0:
-            raise PlayerError('Failed to load player for "{}"'.format(self.filepath))
-        return ret
+            raise PlayerError(f'Failed to set_volume for alias "{self.alias}", Error code {ret}')
 
     def play(self, loop=False, block=False):
         """
@@ -68,12 +74,12 @@ class Player:
         """
         sloop = 'repeat' if loop else ''
         swait = 'wait' if block else ''
-        ret = self.mci_send_string('play {} from 0 {} {}'.format(self.alias, sloop, swait))
+        ret = self.mci_send_string(f'play {self.alias} from 0 {sloop} {swait}')
         if ret != 0:
-            raise PlayerError('Failed to play alias "{}"'.format(self.alias))
+            raise PlayerError(f'Failed to play alias "{self.alias}", Error code {ret}')
 
     def close(self):
         """Closes device, releasing resources. Can't play again."""
-        ret = self.mci_send_string('close {}'.format(self.alias))
+        ret = self.mci_send_string(f'close {self.alias}')
         if ret != 0:
-            raise PlayerError('Failed to close alias "{}"'.format(self.alias))
+            raise PlayerError(f'Failed to close alias "{self.alias}", Error code {ret}')
