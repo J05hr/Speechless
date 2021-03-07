@@ -1,2 +1,0 @@
-2021-03-01 19:11:47,532 - logger:1614643907.5327697 - WARNING - This is a warning
-2021-03-01 19:11:47,532 - logger:1614643907.5327697 - ERROR - This is an error

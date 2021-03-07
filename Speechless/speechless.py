@@ -7,6 +7,7 @@ from Speechless.utils import settings_util, autorun_utils, files_util, logging_u
 
 
 class Speechless:
+    """Establishes the high level application and encapsulates the GUI application and other components."""
 
     def __init__(self, logger):
         # Logger
@@ -28,12 +29,12 @@ class Speechless:
 
         # Threads
         self.mute_sanity_thread = mute_sanity_thread.MuteSanityThread(self)
-        self.mic_input_read_thread = mic_input_read_thread.MuteInputReadThread(self)
+        self.mic_input_read_thread = mic_input_read_thread.MicInputReadThread(self)
         self.m_listener = mouse.Listener(on_click=self.on_mouse_click)
         self.k_listener = keyboard.Listener(on_press=self.on_key_press, on_release=self.on_key_release)
 
     def on_exit(self):
-        # Kill any existing threads.
+        """Kill any existing threads and do any cleanup when the GUI application exits."""
         self.mute_sanity_thread.stop()
         self.mic_input_read_thread.stop()
         self.m_listener.stop()
@@ -41,6 +42,7 @@ class Speechless:
         mic_controls.basic_unmute()  # Ensure unmute on exit.
 
     def on_mouse_click(self, x, y, button, pressed):
+        """Callback for the mouse listener click action."""
         if self.mode == 'ptt':
             if pressed:
                 # Unmute if the keybinding is pressed.
@@ -55,6 +57,7 @@ class Speechless:
         elif self.mode == 'toggle':
             if pressed:
                 if str(button) == self.settings.setting['toggle_keybinding']:
+                    # Toggle the mute.
                     if self.toggle_state == 'unmuted':
                         mic_controls.mute(self, self.logger)
                         self.toggle_state = 'muted'
@@ -63,6 +66,7 @@ class Speechless:
                         self.toggle_state = 'unmuted'
 
     def on_key_press(self, key):
+        """Callback for the keyboard listener press action."""
         if self.mode == 'ptt':
             # Unmute if the keybinding is pressed.
             if str(key).strip('\'\\') == self.settings.setting['ptt_keybinding']:
@@ -80,6 +84,7 @@ class Speechless:
                     self.toggle_state = 'unmuted'
 
     def on_key_release(self, key):
+        """Callback for the keyboard listener release action."""
         if self.mode == 'ptt':
             # Mute if the keybinding is released.
             if str(key).strip('\'\\') == self.settings.setting['ptt_keybinding']:
@@ -87,11 +92,13 @@ class Speechless:
                 self.ptt_key_pushed = False
 
     def run(self):
+        """The main run method to start the GUI and execute the program."""
+
         # Get icon.
         icon_filepath = files_util.get_icons_dir().joinpath('mutemic.png')
-        files_util.file_check(icon_filepath)
+        files_util.dep_check(icon_filepath)
 
-        # Run gui.
+        # Run the GUI.
         self.gui_app = QApplication(sys.argv)
         self.gui_app.aboutToQuit.connect(self.on_exit)
         self.win = main_window.MainWindow(self)
@@ -100,14 +107,14 @@ class Speechless:
         if not self.settings.setting["start_hidden"]:
             self.win.show()
 
-        # Add autostart if set.
+        # Add autostart to windows if autorun setting is true.
         autorun = self.settings.setting['autorun']
         if autorun:
             autorun_utils.add_autorun(self.logger)
         else:
             autorun_utils.remove_autorun(self.logger)
 
-        # Listen for mouse and keyboard.
+        # Listen for mouse and keyboard inputs.
         self.m_listener.start()
         self.k_listener.start()
 
@@ -125,9 +132,8 @@ class Speechless:
 
 
 if __name__ == '__main__':
-    '''
-    main program execution
-    '''
+    """Instantiates and runs the high level application for speechless v1.0."""
+
     base_logger = logging_util.new_logger()
 
     try:

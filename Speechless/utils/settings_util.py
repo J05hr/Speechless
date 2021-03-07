@@ -6,18 +6,19 @@ from Speechless.utils import files_util
 sounds_dir = files_util.get_sounds_dir()
 config_dir = files_util.get_config_dir()
 config_filename = files_util.get_config_dir().joinpath('config.json')
-files_util.file_check(config_filename)
+files_util.dep_check(config_filename)
 
 
-# defaults: (ptt mode, y key, t key, don't autorun, don't start hidden, minimize to tray,
-#            enable mute sound, enable unmute sound, default sounds, 50% volume)
+"""defaults: (ptt mode, y key, t key, don't autorun, don't start hidden, minimize to tray,
+              enable mute sound, enable unmute sound, default sounds, 50% volume) """
+
 default_settings = settings.Settings('ptt', 'y', 't', False, False, True, True, True,
                                      [{"mute_sound": str(sounds_dir.joinpath('beep300.wav'))},
                                          {"unmute_sound": str(sounds_dir.joinpath('beep750.wav'))}], 0.5)
 
 
-# try to read the last settings or fallback to defaults
 def read_settings(logger):
+    """Try to read the last settings or fallback to defaults."""
     try:
         with open(config_filename, "r") as config_file:
             current_settings = json.load(config_file)
@@ -49,8 +50,8 @@ def read_settings(logger):
         return default_settings
 
 
-# try to write the settings or fallback to defaults
 def write_settings(new_settings, logger):
+    """Try to write the settings to the config.json or fallback and write defaults."""
     try:
         with open(config_filename, "w") as config_file:
             json_settings = {

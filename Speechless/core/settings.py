@@ -1,6 +1,8 @@
 
 
 class Settings:
+    """Establishes an object representing the application settings."""
+
     def __init__(self, mode, toggle_keybinding, ptt_keybinding, autorun, start_hidden, minimize_to_tray,
                  enable_mute_sound, enable_unmute_sound, sound_files, sound_volume):
 
