@@ -1,6 +1,9 @@
 from ctypes import windll
 
 
+win_lib = windll.winmm
+
+
 class PlayerError(Exception):
     """Basic exception for errors raised by Player."""
     pass
@@ -25,7 +28,10 @@ class Player:
 
     @staticmethod
     def mci_send_string(command):
-        return windll.winmm.mciSendStringW(command, None, 0, 0)
+        print(command)
+        ret = win_lib.mciSendStringW(command, None, 0, 0)
+        print(ret)
+        return ret
 
     def get_filename(self):
         return self.filepath
