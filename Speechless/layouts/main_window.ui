@@ -212,7 +212,7 @@
     </property>
     <widget class="QMenu" name="menuPlay_Sounds">
      <property name="title">
-      <string>enable sounds</string>
+      <string>Enable sounds</string>
      </property>
      <addaction name="actionEnableMuteSound"/>
      <addaction name="actionEnableUnmuteSound"/>
@@ -253,7 +253,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>autorun at startup</string>
+    <string>Autorun at startup</string>
    </property>
   </action>
   <action name="actionShow_Notifications">
@@ -269,7 +269,7 @@
   </action>
   <action name="actionCustom_Sounds">
    <property name="text">
-    <string>customize sounds</string>
+    <string>Customize sounds</string>
    </property>
   </action>
   <action name="actionStart_muted">
@@ -282,7 +282,7 @@
   </action>
   <action name="actionInfo">
    <property name="text">
-    <string>info</string>
+    <string>Application info</string>
    </property>
   </action>
   <action name="actionMinimize_to_tray">
@@ -290,7 +290,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>minimize to tray</string>
+    <string>Minimize to tray</string>
    </property>
   </action>
   <action name="actionStart_hidden">
@@ -298,7 +298,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>start hidden</string>
+    <string>Start hidden</string>
    </property>
   </action>
   <action name="actionPTTMode">
@@ -306,7 +306,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>push-to-talk mode</string>
+    <string>Push-to-talk mode</string>
    </property>
   </action>
   <action name="actionToggleMode">
@@ -314,17 +314,17 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>toggle mode</string>
+    <string>Toggle mode</string>
    </property>
   </action>
   <action name="actionTogglekeybinding">
    <property name="text">
-    <string>set key for toggle mode</string>
+    <string>Set key for toggle mode</string>
    </property>
   </action>
   <action name="actionPTTkeybinding">
    <property name="text">
-    <string>set key for ptt mode</string>
+    <string>Set key for ptt mode</string>
    </property>
   </action>
   <action name="actionEnableMuteSound">
