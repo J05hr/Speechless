@@ -30,26 +30,13 @@ class Player:
 
     @staticmethod
     def mci_send_string(command):
-        return win_lib.mciSendStringW(command, None, 0, 0)
+        return win_lib.mciSendStringW(command, 0, 0, 0)
 
     def get_filename(self):
         return self.filepath
 
     def get_volume(self):
         return self.volume
-
-    def set_volume(self, value):
-        """
-        Sets the volume level of the windows player.
-
-        Parameters:
-            value(int): The volume level as an integer.
-        """
-        value = max(min(value, 100), 0)  # clamp to [0..100]
-        self.volume = int(value * 10)  # MCI volume: 0...1000
-        ret = self.mci_send_string('setaudio {} volume to {}'.format(self.alias, self.volume))
-        if ret != 0:
-            raise PlayerError('Failed to set_volume for alias "{}"'.format(self.alias))
 
     def load_player(self):
         """
@@ -61,8 +48,21 @@ class Player:
         ret = self.mci_send_string(f'open "{self.filepath}" type mpegvideo alias {self.alias}')
         self.loaded = ret
         if ret != 0:
-            raise PlayerError(f'Failed to load player for {self.filepath}, Error code {ret} ')
+            raise PlayerError(f'Failed to load player for {self.filepath}, Error code {ret}')
         return ret
+
+    def set_volume(self, value):
+        """
+        Sets the volume level of the windows player.
+
+        Parameters:
+            value(int): The volume level as an integer.
+        """
+        value = max(min(value, 100), 0)  # clamp to [0..100]
+        self.volume = int(value * 10)  # MCI volume: 0...1000
+        ret = self.mci_send_string(f'setaudio {self.alias} volume to {self.volume}')
+        if ret != 0:
+            raise PlayerError(f'Failed to set_volume for alias "{self.alias}", Error code {ret}')
 
     def play(self, loop=False, block=False):
         """

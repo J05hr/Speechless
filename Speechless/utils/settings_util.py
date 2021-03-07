@@ -13,8 +13,8 @@ files_util.dep_check(config_filename)
               enable mute sound, enable unmute sound, default sounds, 50% volume) """
 
 default_settings = settings.Settings('ptt', 'y', 't', False, False, True, True, True,
-                                     [{"mute_sound": str(sounds_dir.joinpath('beep300.wav'))},
-                                         {"unmute_sound": str(sounds_dir.joinpath('beep750.wav'))}], 0.5)
+                                     [{"mute_sound": 'beep300.wav'},
+                                         {"unmute_sound": 'beep750.wav'}], 0.5)
 
 
 def read_settings(logger):
@@ -34,10 +34,10 @@ def read_settings(logger):
         sound_files = current_settings["sound_files"]
         # update sounds to default if None
         if current_settings["sound_files"][0]["mute_sound"] is None:
-            current_settings["sound_files"][0]["mute_sound"] = str(sounds_dir.joinpath('beep300.wav'))
+            current_settings["sound_files"][0]["mute_sound"] = 'beep300.wav'
             write_settings(current_settings, logger)
         if current_settings["sound_files"][1]["unmute_sound"] is None:
-            current_settings["sound_files"][1]["unmute_sound"] = str(sounds_dir.joinpath('beep750.wav'))
+            current_settings["sound_files"][1]["unmute_sound"] = 'beep750.wav'
             write_settings(current_settings, logger)
         sound_volume = current_settings["sound_volume"]
 

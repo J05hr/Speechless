@@ -5,15 +5,15 @@ from Speechless.core import audio_player
 class SoundOutputThread (threading.Thread):
     """Establishes a thread to output notification sounds."""
 
-    def __init__(self, filename, volume, parent_app):
+    def __init__(self, filepath, volume, parent_app):
         threading.Thread.__init__(self)
         self.parent_app = parent_app
-        self.filename = filename
+        self.filepath = filepath
         self.volume = volume
 
     def play_sound(self):
         """Creates a new Player object, sets the volume level, and plays the sound for this threads filename."""
-        player = audio_player.Player(self.filename)
+        player = audio_player.Player(self.filepath)
         player.set_volume(self.volume)
         player.play(block=True)
 

@@ -27,9 +27,10 @@ def mute(app, logger):
 
     # Play mute sound if enabled by the settings.
     if app.settings.setting["enable_mute_sound"]:
+        mute_sound_path = files_util.get_sounds_dir().joinpath(app.settings.setting["sound_files"][0]["mute_sound"])
         try:
             sound_output_thread.SoundOutputThread(
-                app.settings.setting["sound_files"][0]["mute_sound"],
+                mute_sound_path,
                 int(app.settings.setting["sound_volume"] * 100), app).start()
         except Exception as s_e:
             logger.error("Error starting mute sound thread, " + str(s_e), exc_info=True)
@@ -50,9 +51,10 @@ def unmute(app, logger):
 
     # Play unmute sound if enabled by the settings.
     if app.settings.setting["enable_unmute_sound"]:
+        unmute_sound_path = files_util.get_sounds_dir().joinpath(app.settings.setting["sound_files"][1]["unmute_sound"])
         try:
             sound_output_thread.SoundOutputThread(
-                app.settings.setting["sound_files"][1]["unmute_sound"],
+                unmute_sound_path,
                 int(app.settings.setting["sound_volume"] * 100), app).start()
         except Exception as s_e:
             logger.error("Error starting unmute sound thread, " + str(s_e), exc_info=True)
