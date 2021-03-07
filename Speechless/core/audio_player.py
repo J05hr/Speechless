@@ -21,17 +21,16 @@ class Player:
         self.alias = str(id(self))
         self.filepath = filepath
         self.volume = 100
+        self.loaded = -1
         self.load_player()
 
     def __del__(self):
-        self.close()
+        if self.loaded == 0:  # close on delete if successfully loaded previously
+            self.close()
 
     @staticmethod
     def mci_send_string(command):
-        print(command)
-        ret = win_lib.mciSendStringW(command, None, 0, 0)
-        print(ret)
-        return ret
+        return win_lib.mciSendStringW(command, None, 0, 0)
 
     def get_filename(self):
         return self.filepath
@@ -60,6 +59,7 @@ class Player:
             ret(int): A status code from the call to windll.winmm.mciSendStringW().
         """
         ret = self.mci_send_string('open "{}" type mpegvideo alias {}'.format(self.filepath, self.alias))
+        self.loaded = ret
         if ret != 0:
             raise PlayerError('Failed to load player for "{}"'.format(self.filepath))
         return ret
