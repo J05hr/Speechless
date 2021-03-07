@@ -58,10 +58,10 @@ class Player:
         Returns:
             ret(int): A status code from the call to windll.winmm.mciSendStringW().
         """
-        ret = self.mci_send_string('open "{}" type mpegvideo alias {}'.format(self.filepath, self.alias))
+        ret = self.mci_send_string(f'open "{self.filepath}" type mpegvideo alias {self.alias}')
         self.loaded = ret
         if ret != 0:
-            raise PlayerError('Failed to load player for "{}"'.format(self.filepath))
+            raise PlayerError(f'Failed to load player for {self.filepath}, Error code {ret} ')
         return ret
 
     def play(self, loop=False, block=False):
@@ -74,12 +74,12 @@ class Player:
         """
         sloop = 'repeat' if loop else ''
         swait = 'wait' if block else ''
-        ret = self.mci_send_string('play {} from 0 {} {}'.format(self.alias, sloop, swait))
+        ret = self.mci_send_string(f'play {self.alias} from 0 {sloop} {swait}')
         if ret != 0:
-            raise PlayerError('Failed to play alias "{}"'.format(self.alias))
+            raise PlayerError(f'Failed to play alias "{self.alias}", Error code {ret}')
 
     def close(self):
         """Closes device, releasing resources. Can't play again."""
-        ret = self.mci_send_string('close {}'.format(self.alias))
+        ret = self.mci_send_string(f'close {self.alias}')
         if ret != 0:
-            raise PlayerError('Failed to close alias "{}"'.format(self.alias))
+            raise PlayerError(f'Failed to close alias "{self.alias}", Error code {ret}')
