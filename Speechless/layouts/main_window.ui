@@ -225,6 +225,7 @@
      <string>About</string>
     </property>
     <addaction name="actionInfo"/>
+    <addaction name="actionLog"/>
    </widget>
    <widget class="QMenu" name="menuKeybinding_2">
     <property name="title">
@@ -341,6 +342,11 @@
    </property>
    <property name="text">
     <string>enable un-mute sound</string>
+   </property>
+  </action>
+  <action name="actionLog">
+   <property name="text">
+    <string>Log</string>
    </property>
   </action>
  </widget>

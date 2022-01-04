@@ -1,0 +1,164 @@
+2021-03-08 20:55:53,956 - ERROR - Fatal Error, arguments did not match any overloaded call:
+  QFile(): too many arguments
+  QFile(str): argument 1 has unexpected type 'WindowsPath'
+  QFile(QObject): argument 1 has unexpected type 'WindowsPath'
+  QFile(str, QObject): argument 1 has unexpected type 'WindowsPath'
+Traceback (most recent call last):
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 151, in <module>
+    speechless.run()
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 109, in run
+    self.style_file = QFile(style_filepath)
+TypeError: arguments did not match any overloaded call:
+  QFile(): too many arguments
+  QFile(str): argument 1 has unexpected type 'WindowsPath'
+  QFile(QObject): argument 1 has unexpected type 'WindowsPath'
+  QFile(str, QObject): argument 1 has unexpected type 'WindowsPath'
+2021-03-08 20:56:14,280 - ERROR - Fatal Error, arguments did not match any overloaded call:
+  QFile(): too many arguments
+  QFile(str): argument 1 has unexpected type 'WindowsPath'
+  QFile(QObject): argument 1 has unexpected type 'WindowsPath'
+  QFile(str, QObject): argument 1 has unexpected type 'WindowsPath'
+Traceback (most recent call last):
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 151, in <module>
+    speechless.run()
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 109, in run
+    self.style_file = QFile(style_filepath)
+TypeError: arguments did not match any overloaded call:
+  QFile(): too many arguments
+  QFile(str): argument 1 has unexpected type 'WindowsPath'
+  QFile(QObject): argument 1 has unexpected type 'WindowsPath'
+  QFile(str, QObject): argument 1 has unexpected type 'WindowsPath'
+2022-01-03 21:36:38,498 - ERROR - Fatal Error, 'NoneType' object has no attribute 'setText'
+Traceback (most recent call last):
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 151, in <module>
+    speechless.run()
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 114, in run
+    self.win = main_window.MainWindow(self)
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\gui\main_window.py", line 28, in __init__
+    self.log_win = log_window.LogWindow(self.parent_app)
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\gui\log_window.py", line 27, in __init__
+    self.log_text_Label.setText(log_text)
+AttributeError: 'NoneType' object has no attribute 'setText'
+2021-03-08 20:55:53,956 - ERROR - Fatal Error, arguments did not match any overloaded call:
+  QFile(): too many arguments
+  QFile(str): argument 1 has unexpected type 'WindowsPath'
+  QFile(QObject): argument 1 has unexpected type 'WindowsPath'
+  QFile(str, QObject): argument 1 has unexpected type 'WindowsPath'
+Traceback (most recent call last):
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 151, in <module>
+    speechless.run()
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 109, in run
+    self.style_file = QFile(style_filepath)
+TypeError: arguments did not match any overloaded call:
+  QFile(): too many arguments
+  QFile(str): argument 1 has unexpected type 'WindowsPath'
+  QFile(QObject): argument 1 has unexpected type 'WindowsPath'
+  QFile(str, QObject): argument 1 has unexpected type 'WindowsPath'
+2021-03-08 20:56:14,280 - ERROR - Fatal Error, arguments did not match any overloaded call:
+  QFile(): too many arguments
+  QFile(str): argument 1 has unexpected type 'WindowsPath'
+  QFile(QObject): argument 1 has unexpected type 'WindowsPath'
+  QFile(str, QObject): argument 1 has unexpected type 'WindowsPath'
+Traceback (most recent call last):
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 151, in <module>
+    speechless.run()
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 109, in run
+    self.style_file = QFile(style_filepath)
+TypeError: arguments did not match any overloaded call:
+  QFile(): too many arguments
+  QFile(str): argument 1 has unexpected type 'WindowsPath'
+  QFile(QObject): argument 1 has unexpected type 'WindowsPath'
+  QFile(str, QObject): argument 1 has unexpected type 'WindowsPath'
+2022-01-03 21:36:38,498 - ERROR - Fatal Error, 'NoneType' object has no attribute 'setText'
+Traceback (most recent call last):
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 151, in <module>
+    speechless.run()
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 114, in run
+    self.win = main_window.MainWindow(self)
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\gui\main_window.py", line 28, in __init__
+    self.log_win = log_window.LogWindow(self.parent_app)
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\gui\log_window.py", line 27, in __init__
+    self.log_text_Label.setText(log_text)
+AttributeError: 'NoneType' object has no attribute 'setText'
+2021-03-08 20:55:53,956 - ERROR - Fatal Error, arguments did not match any overloaded call:
+  QFile(): too many arguments
+  QFile(str): argument 1 has unexpected type 'WindowsPath'
+  QFile(QObject): argument 1 has unexpected type 'WindowsPath'
+  QFile(str, QObject): argument 1 has unexpected type 'WindowsPath'
+Traceback (most recent call last):
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 151, in <module>
+    speechless.run()
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 109, in run
+    self.style_file = QFile(style_filepath)
+TypeError: arguments did not match any overloaded call:
+  QFile(): too many arguments
+  QFile(str): argument 1 has unexpected type 'WindowsPath'
+  QFile(QObject): argument 1 has unexpected type 'WindowsPath'
+  QFile(str, QObject): argument 1 has unexpected type 'WindowsPath'
+2021-03-08 20:56:14,280 - ERROR - Fatal Error, arguments did not match any overloaded call:
+  QFile(): too many arguments
+  QFile(str): argument 1 has unexpected type 'WindowsPath'
+  QFile(QObject): argument 1 has unexpected type 'WindowsPath'
+  QFile(str, QObject): argument 1 has unexpected type 'WindowsPath'
+Traceback (most recent call last):
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 151, in <module>
+    speechless.run()
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 109, in run
+    self.style_file = QFile(style_filepath)
+TypeError: arguments did not match any overloaded call:
+  QFile(): too many arguments
+  QFile(str): argument 1 has unexpected type 'WindowsPath'
+  QFile(QObject): argument 1 has unexpected type 'WindowsPath'
+  QFile(str, QObject): argument 1 has unexpected type 'WindowsPath'
+2022-01-03 21:36:38,498 - ERROR - Fatal Error, 'NoneType' object has no attribute 'setText'
+Traceback (most recent call last):
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 151, in <module>
+    speechless.run()
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 114, in run
+    self.win = main_window.MainWindow(self)
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\gui\main_window.py", line 28, in __init__
+    self.log_win = log_window.LogWindow(self.parent_app)
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\gui\log_window.py", line 27, in __init__
+    self.log_text_Label.setText(log_text)
+AttributeError: 'NoneType' object has no attribute 'setText'
+2021-03-08 20:55:53,956 - ERROR - Fatal Error, arguments did not match any overloaded call:
+  QFile(): too many arguments
+  QFile(str): argument 1 has unexpected type 'WindowsPath'
+  QFile(QObject): argument 1 has unexpected type 'WindowsPath'
+  QFile(str, QObject): argument 1 has unexpected type 'WindowsPath'
+Traceback (most recent call last):
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 151, in <module>
+    speechless.run()
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 109, in run
+    self.style_file = QFile(style_filepath)
+TypeError: arguments did not match any overloaded call:
+  QFile(): too many arguments
+  QFile(str): argument 1 has unexpected type 'WindowsPath'
+  QFile(QObject): argument 1 has unexpected type 'WindowsPath'
+  QFile(str, QObject): argument 1 has unexpected type 'WindowsPath'
+2021-03-08 20:56:14,280 - ERROR - Fatal Error, arguments did not match any overloaded call:
+  QFile(): too many arguments
+  QFile(str): argument 1 has unexpected type 'WindowsPath'
+  QFile(QObject): argument 1 has unexpected type 'WindowsPath'
+  QFile(str, QObject): argument 1 has unexpected type 'WindowsPath'
+Traceback (most recent call last):
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 151, in <module>
+    speechless.run()
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 109, in run
+    self.style_file = QFile(style_filepath)
+TypeError: arguments did not match any overloaded call:
+  QFile(): too many arguments
+  QFile(str): argument 1 has unexpected type 'WindowsPath'
+  QFile(QObject): argument 1 has unexpected type 'WindowsPath'
+  QFile(str, QObject): argument 1 has unexpected type 'WindowsPath'
+2022-01-03 21:36:38,498 - ERROR - Fatal Error, 'NoneType' object has no attribute 'setText'
+Traceback (most recent call last):
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 151, in <module>
+    speechless.run()
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\speechless.py", line 114, in run
+    self.win = main_window.MainWindow(self)
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\gui\main_window.py", line 28, in __init__
+    self.log_win = log_window.LogWindow(self.parent_app)
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\gui\log_window.py", line 27, in __init__
+    self.log_text_Label.setText(log_text)
+AttributeError: 'NoneType' object has no attribute 'setText'
