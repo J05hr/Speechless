@@ -24,3 +24,14 @@ def new_logger():
     logger.addHandler(f_handler)
 
     return logger
+
+
+def read_log(log_filename, logger):
+    """Try to read the log"""
+    try:
+        with open(log_filename, "r") as log_file:
+            log_text = log_file.read()
+        return log_text
+
+    except Exception as e:
+        logger.error("Error reading log, " + str(e), exc_info=True)

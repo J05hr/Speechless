@@ -2,7 +2,7 @@ import pyaudio
 from PyQt5 import uic, QtCore, QtWidgets, QtGui
 from Speechless.core import mic_controls
 from Speechless.utils import settings_util, autorun_utils, files_util
-from Speechless.gui import about_window, ptt_keybinding_window, toggle_keybinding_window, custom_sounds_window
+from Speechless.gui import about_window, log_window, ptt_keybinding_window, toggle_keybinding_window, custom_sounds_window
 
 
 main_window_layout_file = files_util.get_layouts_dir().joinpath('main_window.ui')
@@ -25,6 +25,7 @@ class MainWindow(BaseClass, FormClass):
 
         # Windows
         self.about_win = about_window.AboutWindow()
+        self.log_win = log_window.LogWindow(self.parent_app)
         self.toggle_keybinding_win = toggle_keybinding_window.ToggleKeyBindingWindow(self.parent_app)
         self.ptt_keybinding_win = ptt_keybinding_window.PttKeyBindingWindow(self.parent_app)
         self.custom_sounds_win = custom_sounds_window.CustomSoundsWindow(self.parent_app)
@@ -58,6 +59,8 @@ class MainWindow(BaseClass, FormClass):
         self.action_minimize_to_tray.triggered.connect(self.minimize_to_tray_action_cb)
         self.action_info = self.findChild(QtWidgets.QAction, 'actionInfo')
         self.action_info.triggered.connect(self.about_window_action_cb)
+        self.action_log = self.findChild(QtWidgets.QAction, 'actionLog')
+        self.action_log.triggered.connect(self.log_window_action_cb)
 
         # Menu Notifications
         self.action_enable_mute_sound = self.findChild(QtWidgets.QAction, 'actionEnableMuteSound')
@@ -160,6 +163,10 @@ class MainWindow(BaseClass, FormClass):
     def about_window_action_cb(self):
         """Callback for the Info action, opens the Info/About window for app information."""
         self.about_win.show()
+
+    def log_window_action_cb(self):
+        """Callback for the Info action, opens the Info/About window for app information."""
+        self.log_win.show()
 
     def changeEvent(self, event):
         """Override changeEvent() to minimize depending on the 'minimize to tray' setting."""

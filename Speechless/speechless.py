@@ -1,4 +1,5 @@
 import sys
+from PyQt5.QtCore import QFile, QTextStream
 from pynput import mouse, keyboard
 from PyQt5.QtWidgets import QApplication
 from Speechless.core import mic_controls, mute_sanity_thread, mic_input_read_thread
@@ -24,6 +25,7 @@ class Speechless:
 
         # GUI
         self.gui_app = None
+        self.style_file = None
         self.win = None
         self.tray = None
 
@@ -98,8 +100,16 @@ class Speechless:
         icon_filepath = files_util.get_icons_dir().joinpath('mutemic.png')
         files_util.dep_check(icon_filepath)
 
+        # Get the Style
+        style_filepath = files_util.get_layouts_dir().joinpath('styles\\main_style.qss')
+        files_util.dep_check(style_filepath)
+
         # Run the GUI.
         self.gui_app = QApplication(sys.argv)
+        self.style_file = QFile(str(style_filepath))
+        self.style_file.open(QFile.ReadOnly | QFile.Text)
+        stream = QTextStream(self.style_file)
+        self.gui_app.setStyleSheet(stream.readAll())
         self.gui_app.aboutToQuit.connect(self.on_exit)
         self.win = main_window.MainWindow(self)
         self.tray = system_tray.SystemTrayIcon(icon_filepath, self.gui_app, self.win)
@@ -141,6 +151,7 @@ if __name__ == '__main__':
         speechless.run()
 
     except Exception as e:
+        print(e)
         base_logger.error("Fatal Error, " + str(e), exc_info=True)
         mic_controls.basic_unmute()  # Ensure the mic is left in an un-muted state.
         settings_util.write_settings(settings_util.default_settings, base_logger)  # Reset the settings to default.
