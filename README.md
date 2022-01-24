@@ -24,8 +24,7 @@ This allows the user to enjoy a push-to-talk experience where they normally woul
 * Third Party Libraries:
   - pywin32 for access to microphone contols
   - audioplayer for playing sounds
-  - sounddevice for monitoring audio
-  - pyaudio for getting devices
+  - sounddevice for monitoring audio and getting devices
   - pynput for key and mouse listeners
   - pyinstaller for generating the executable
 
