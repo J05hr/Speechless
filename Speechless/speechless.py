@@ -4,7 +4,7 @@ from pynput import mouse, keyboard
 from PyQt5.QtWidgets import QApplication
 from Speechless.core import mic_controls, mute_sanity_thread, mic_input_read_thread
 from Speechless.gui import main_window, system_tray
-from Speechless.utils import settings_util, autorun_utils, files_util, logging_util
+from Speechless.utils import settings_util, device_util, files_util, logging_util
 
 
 class Speechless:
@@ -111,32 +111,29 @@ class Speechless:
         stream = QTextStream(self.style_file)
         self.gui_app.setStyleSheet(stream.readAll())
         self.gui_app.aboutToQuit.connect(self.on_exit)
-        self.win = main_window.MainWindow(self)
+        self.win = main_window.MainWindow(self, self.gui_app)
         self.tray = system_tray.SystemTrayIcon(icon_filepath, self.gui_app, self.win)
         self.tray.show()
         if not self.settings.setting["start_hidden"]:
             self.win.show()
 
-        # Add autostart to windows if autorun setting is true.
-        autorun = self.settings.setting['autorun']
-        if autorun:
-            autorun_utils.add_autorun(self.logger)
+        # Check for default input device, if none then popup a warning and close the app.
+        if not device_util.get_default_input_device(self.logger):
+            self.win.input_device_warning.show()
         else:
-            autorun_utils.remove_autorun(self.logger)
+            # Listen for mouse and keyboard inputs.
+            self.m_listener.start()
+            self.k_listener.start()
 
-        # Listen for mouse and keyboard inputs.
-        self.m_listener.start()
-        self.k_listener.start()
+            # Start the sanity check thread and the input reader thread.
+            self.mic_input_read_thread.start()
+            self.mute_sanity_thread.start()
 
-        # Start the sanity check thread and the input reader thread.
-        self.mic_input_read_thread.start()
-        self.mute_sanity_thread.start()
-
-        # Start muted if ptt mode or un-muted if toggle mode.
-        if self.mode == 'ptt':
-            mic_controls.mute(self, self.logger)
-        elif self.mode == 'toggle':
-            mic_controls.unmute(self, self.logger)
+            # Start muted if ptt mode or un-muted if toggle mode.
+            if self.mode == 'ptt':
+                mic_controls.mute(self, self.logger)
+            elif self.mode == 'toggle':
+                mic_controls.unmute(self, self.logger)
 
         sys.exit(self.gui_app.exec())
 
@@ -145,11 +142,9 @@ if __name__ == '__main__':
     """Instantiates and runs the high level application for speechless v1.0."""
 
     base_logger = logging_util.new_logger()
-
     try:
         speechless = Speechless(base_logger)
         speechless.run()
-
     except Exception as e:
         print(e)
         base_logger.error("Fatal Error, " + str(e), exc_info=True)
