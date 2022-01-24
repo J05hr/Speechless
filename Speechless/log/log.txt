@@ -162,3 +162,93 @@ Traceback (most recent call last):
   File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\gui\log_window.py", line 27, in __init__
     self.log_text_Label.setText(log_text)
 AttributeError: 'NoneType' object has no attribute 'setText'
+2022-01-23 20:32:14,839 - ERROR - Fatal Error, No Default Input Device Available
+Traceback (most recent call last):
+  File "C:/Users/J05h/Desktop/Projects/Speechless/Speechless/speechless.py", line 151, in <module>
+    speechless.run()
+  File "C:/Users/J05h/Desktop/Projects/Speechless/Speechless/speechless.py", line 114, in run
+    self.win = main_window.MainWindow(self)
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\gui\main_window.py", line 80, in __init__
+    self.default_input_device = self.pa.get_default_input_device_info()
+  File "C:\Users\J05h\AppData\Roaming\Python\Python39\site-packages\pyaudio.py", line 949, in get_default_input_device_info
+    device_index = pa.get_default_input_device()
+OSError: No Default Input Device Available
+2022-01-23 21:21:28,467 - ERROR - Failed to query input devices, Error querying device -1
+Traceback (most recent call last):
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\utils\device_util.py", line 8, in get_default_input_device
+    default_input_device = sd.query_devices(kind='input')
+  File "C:\Users\J05h\AppData\Roaming\Python\Python39\site-packages\sounddevice.py", line 564, in query_devices
+    raise PortAudioError('Error querying device {}'.format(device))
+sounddevice.PortAudioError: Error querying device -1
+2022-01-23 21:28:42,213 - ERROR - Failed to query input devices, Error querying device -1
+Traceback (most recent call last):
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\utils\device_util.py", line 8, in get_default_input_device
+    default_input_device = sd.query_devices(kind='input')['name']
+  File "C:\Users\J05h\AppData\Roaming\Python\Python39\site-packages\sounddevice.py", line 564, in query_devices
+    raise PortAudioError('Error querying device {}'.format(device))
+sounddevice.PortAudioError: Error querying device -1
+2022-01-23 22:10:26,263 - ERROR - Fatal Error, 'NoneType' object has no attribute 'clicked'
+Traceback (most recent call last):
+  File "C:/Users/J05h/Desktop/Projects/Speechless/Speechless/speechless.py", line 147, in <module>
+    speechless.run()
+  File "C:/Users/J05h/Desktop/Projects/Speechless/Speechless/speechless.py", line 114, in run
+    self.win = main_window.MainWindow(self)
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\gui\main_window.py", line 32, in __init__
+    self.input_device_warning = input_device_warning.InputDeviceWarningWindow(self.parent_app)
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\gui\input_device_warning.py", line 24, in __init__
+    self.ok_button.clicked.connect(self.finished_cb)
+AttributeError: 'NoneType' object has no attribute 'clicked'
+2022-01-23 22:10:33,035 - ERROR - Fatal Error, 'NoneType' object has no attribute 'clicked'
+Traceback (most recent call last):
+  File "C:/Users/J05h/Desktop/Projects/Speechless/Speechless/speechless.py", line 147, in <module>
+    speechless.run()
+  File "C:/Users/J05h/Desktop/Projects/Speechless/Speechless/speechless.py", line 114, in run
+    self.win = main_window.MainWindow(self)
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\gui\main_window.py", line 32, in __init__
+    self.input_device_warning = input_device_warning.InputDeviceWarningWindow(self.parent_app)
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\gui\input_device_warning.py", line 24, in __init__
+    self.ok_button.clicked.connect(self.finished_cb)
+AttributeError: 'NoneType' object has no attribute 'clicked'
+2022-01-23 22:10:41,847 - ERROR - Fatal Error, 'NoneType' object has no attribute 'clicked'
+Traceback (most recent call last):
+  File "C:/Users/J05h/Desktop/Projects/Speechless/Speechless/speechless.py", line 147, in <module>
+    speechless.run()
+  File "C:/Users/J05h/Desktop/Projects/Speechless/Speechless/speechless.py", line 114, in run
+    self.win = main_window.MainWindow(self)
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\gui\main_window.py", line 32, in __init__
+    self.input_device_warning = input_device_warning.InputDeviceWarningWindow(self.parent_app)
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\gui\input_device_warning.py", line 24, in __init__
+    self.ok_button.clicked.connect(self.finished_cb)
+AttributeError: 'NoneType' object has no attribute 'clicked'
+2022-01-23 22:11:38,396 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:12:45,529 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:13:10,677 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:13:45,995 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:14:10,708 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:18:49,686 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:18:56,531 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:19:55,945 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:21:05,541 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:22:49,093 - ERROR - Fatal Error, 'QApplication' object has no attribute 'logger'
+Traceback (most recent call last):
+  File "C:/Users/J05h/Desktop/Projects/Speechless/Speechless/speechless.py", line 148, in <module>
+    speechless.run()
+  File "C:/Users/J05h/Desktop/Projects/Speechless/Speechless/speechless.py", line 114, in run
+    self.win = main_window.MainWindow(self.gui_app)
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\gui\main_window.py", line 28, in __init__
+    self.log_win = log_window.LogWindow(self.parent_app)
+  File "C:\Users\J05h\Desktop\Projects\Speechless\Speechless\gui\log_window.py", line 26, in __init__
+    log_text = logging_util.read_log(log_filepath, app.logger)
+AttributeError: 'QApplication' object has no attribute 'logger'
+2022-01-23 22:25:22,560 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:25:49,563 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:25:54,562 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:26:00,726 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:26:38,136 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:26:45,525 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:26:49,858 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:28:06,789 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:28:34,459 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:29:18,709 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:29:37,627 - ERROR - Failed to query input devices, there may be none available; Error querying device -1
+2022-01-23 22:29:53,695 - ERROR - Failed to query input devices, there may be none available; Error querying device -1

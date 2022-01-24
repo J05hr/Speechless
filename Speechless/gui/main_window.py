@@ -1,8 +1,8 @@
-import pyaudio
 from PyQt5 import uic, QtCore, QtWidgets, QtGui
 from Speechless.core import mic_controls
 from Speechless.utils import settings_util, autorun_utils, files_util
-from Speechless.gui import about_window, log_window, ptt_keybinding_window, toggle_keybinding_window, custom_sounds_window
+from Speechless.gui import about_window, log_window, ptt_keybinding_window, toggle_keybinding_window, \
+    custom_sounds_window, input_device_warning
 
 
 main_window_layout_file = files_util.get_layouts_dir().joinpath('main_window.ui')
@@ -13,11 +13,12 @@ FormClass, BaseClass = uic.loadUiType(main_window_layout_file)
 class MainWindow(BaseClass, FormClass):
     """Creates a MainWindow object for the GUI based on the main_window_layout_file."""
 
-    def __init__(self, app):
+    def __init__(self, app, gui_app):
         super(MainWindow, self).__init__()
 
         # Setup
         self.parent_app = app
+        self.gui_app = gui_app
         self.setupUi(self)
         icon_filepath = files_util.get_icons_dir().joinpath('mic.png')
         files_util.dep_check(icon_filepath)
@@ -29,6 +30,7 @@ class MainWindow(BaseClass, FormClass):
         self.toggle_keybinding_win = toggle_keybinding_window.ToggleKeyBindingWindow(self.parent_app)
         self.ptt_keybinding_win = ptt_keybinding_window.PttKeyBindingWindow(self.parent_app)
         self.custom_sounds_win = custom_sounds_window.CustomSoundsWindow(self.parent_app)
+        self.input_device_warning = input_device_warning.InputDeviceWarningWindow(self.gui_app)
 
         # Modes
         self.action_toggle_mode = self.findChild(QtWidgets.QAction, 'actionToggleMode')
@@ -73,16 +75,6 @@ class MainWindow(BaseClass, FormClass):
         self.action_enable_unmute_sound.triggered.connect(self.enable_unmute_sound_action_cb)
         self.action_custom_sounds = self.findChild(QtWidgets.QAction, 'actionCustom_Sounds')
         self.action_custom_sounds.triggered.connect(self.custom_sounds_action_cb)
-
-        # Device Info
-        self.menu_device = self.findChild(QtWidgets.QMenu, 'menuDevice')
-        self.pa = pyaudio.PyAudio()
-        self.default_input_device = self.pa.get_default_input_device_info()
-        self.current_device = QtWidgets.QAction(self.default_input_device["name"])
-        self.current_device.setCheckable(True)
-        self.current_device.setChecked(True)
-        self.current_device.setEnabled(False)
-        self.menu_device.addAction(self.current_device)
 
     def toggle_mode_action_cb(self):
         """Callback for the Toggle mode action, takes the app out of PTT mode and puts it in Toggle mode."""

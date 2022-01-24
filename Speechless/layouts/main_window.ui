@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>457</width>
-    <height>165</height>
+    <width>472</width>
+    <height>291</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -171,7 +171,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>457</width>
+     <width>472</width>
      <height>26</height>
     </rect>
    </property>
@@ -197,14 +197,6 @@
     <addaction name="actionAutorun"/>
     <addaction name="actionStart_hidden"/>
     <addaction name="actionMinimize_to_tray"/>
-   </widget>
-   <widget class="QMenu" name="menuDevice">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="title">
-     <string>Device</string>
-    </property>
    </widget>
    <widget class="QMenu" name="menuNotifications">
     <property name="title">
@@ -245,7 +237,6 @@
    <addaction name="menuKeybinding_2"/>
    <addaction name="menuOptions"/>
    <addaction name="menuNotifications"/>
-   <addaction name="menuDevice"/>
    <addaction name="menuAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
